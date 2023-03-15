@@ -7,8 +7,9 @@ k = 1
 ra = 4
 c = 'black'
 w = 2.5
+ls = -0.5
 
-d = draw.Drawing(205, 40, origin=(-89,-21), displayInline=False)
+d = draw.Drawing(210, 41, origin=(-95,-21), displayInline=False)
 clip = draw.ClipPath()
 
 r = draw.Rectangle(-10, -10, 20, 20, rx=ra, fill='none', stroke_width=w, stroke=c)
@@ -48,9 +49,11 @@ for i in [0,1]:
     d.append(p)
 
 
-p = draw.Text('Spir', 40, -95, 10, fill=c, style="font-family: osifont")
+p = draw.Text('Spir', 40, -101, 10, fill=c, style="font-family: osifont",
+        letter_spacing=ls)
 d.append(p)
-p = draw.Text('Bri', 40, 16, 10, fill=c, style="font-family: osifont")
+p = draw.Text('Bri', 40, 18, 10, fill=c, style="font-family: osifont",
+        letter_spacing=ls)
 d.append(p)
 
 d.set_pixel_scale(2)
