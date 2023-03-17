@@ -7,13 +7,13 @@ k = 1
 ra = 4
 c = 'black'
 w = 2.5
-ls = -5.5 +10
-ws = 3 +20
+ls = -5.5 +2
+ws = 5
 
 
 
 ws += ls -5
-d = draw.Drawing(210+7*ls+ws-2, 41, origin=(-95-7*ls/2-1,-21), displayInline=False)
+d = draw.Drawing(210+7*ls+ws, 41, origin=(-95-8*ls/2-1,-21), displayInline=False)
 clip = draw.ClipPath()
 
 r = draw.Rectangle(-10, -10, 20, 20, rx=ra, fill='none', stroke_width=w, stroke=c)
