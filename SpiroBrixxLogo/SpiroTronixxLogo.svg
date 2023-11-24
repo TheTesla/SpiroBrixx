@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="443.0" height="82" viewBox="-80.75 -21 221.5 41" displayInline="False">
+<defs>
+<clipPath id="d0">
+<rect x="107.5" y="-20" width="32" height="50" />
+</clipPath>
+</defs>
+<rect x="-10" y="-10" width="20" height="20" rx="4" fill="none" stroke-width="2.5" stroke="black" />
+<circle cx="0" cy="0" r="5" fill="none" stroke-width="2.5" stroke="black" />
+<path d="M-5,-10 C0.5,-10,5,-5.5,5,0" stroke-width="2.5" stroke="black" fill="black" fill-opacity="0" />
+<path d="M5,10.0 C-0.5,10.0,-5.0,5.5,-5.0,0" stroke-width="2.5" stroke="black" fill="black" fill-opacity="0" />
+<path d="M0,5.0 C5.5,5.0,10.0,0.5,10.0,-5" stroke-width="2.5" stroke="black" fill="black" fill-opacity="0" />
+<path d="M0,-5.0 C-5.5,-5.0,-10.0,-0.5,-10.0,5" stroke-width="2.5" stroke="black" fill="black" fill-opacity="0" />
+<path d="M86.0,0 C116.0,35.0,116.0,-35.0,146.0,0 M86.0,0 C116.0,-35.0,116.0,35.0,146.0,0" stroke-width="2.5" stroke="black" fill="black" fill-opacity="0" clip-path="url(#d0)" id="d1" />
+<use xlink:href="#d1" />
+<path d="M101.0,0 C131.0,35.0,131.0,-35.0,161.0,0 M101.0,0 C131.0,-35.0,131.0,35.0,161.0,0" stroke-width="2.5" stroke="black" fill="black" fill-opacity="0" clip-path="url(#d0)" id="d2" />
+<use xlink:href="#d2" />
+<text x="-87.0" y="10" font-size="40" fill="black" style="font-family: osifont" letter-spacing="-3.5">Spir</text>
+<text x="14.5" y="10" font-size="40" fill="black" style="font-family: osifont" letter-spacing="-3.5">Troni</text>
+</svg>
