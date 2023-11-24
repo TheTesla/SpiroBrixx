@@ -8,11 +8,15 @@ import sys
 from common.spirostd import screw4, block
 
 
-l, w, h = sys.argv[1:]
+a = sys.argv[1:]
 
-l = float(l)
-w = float(w)
-h = float(h)
+l = float(a[0])
+w = float(a[1])
+h = float(a[2])
+if len(a) > 3:
+    p = float(a[3])
+else:
+    p = 1.0
 
 @njit
 def f(x,y,z):
@@ -39,5 +43,6 @@ def f(x,y,z):
 
     return True
 
-render.renderAndSave(f, f'screwbar4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}.stl', 0.1)
+render.renderAndSave(f,
+                     f'screwbar4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_{p*1000:04.0f}u.stl', p)
 
