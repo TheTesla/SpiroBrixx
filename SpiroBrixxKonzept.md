@@ -20,7 +20,16 @@ _SpiroBrixx_ erfüllt diese Anforderungen, indem die grundsätzlich quaderförmi
 
 ## Geschäftsmodell
 
+Bezeichnungsschema: 
 
+```
+{Designer}{System}{Systemkomponente}{Herstellungsverfahren}{Füllgrad}{Materialtyp}
+```
 
+Beispiel:
+
+```
+SHE001SBX04R030SCB202312010105FDM020PLA
+```
 
 
