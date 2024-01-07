@@ -4,6 +4,15 @@ from xyzcad import render
 from numba import njit
 import math
 import numpy as np
+import sys
+
+a = sys.argv[1:]
+
+l = float(a[0])
+if len(a) > 1:
+    p = float(a[1])
+else:
+    p = 1.0
 
 @njit
 def screwprofile(x):
@@ -33,15 +42,10 @@ def fzCylRnd(p,h,r):
 
 @njit
 def f(x,y,z):
-    l = 77
     rg = 10 -0.2
-    ra = 10
-    rr = 14
-    rf = rg+3
-    hh = 12
-    f = 1.5
+    f = 2
 
-    s = fzCylRnd((x, y, z), l/2, rg - 0.6 - 2*f) - f
+    s = fzCylRnd((x, y, z), l/2-2*f, rg - 0.6 - 2*f) - f
     c1 = fzBlkRnd((x, y), (0, 4)) - 1
     c2 = fzBlkRnd((x, y), (4, 0)) - 1
     if not (max(0,s)**2 + max(0,f-c1)**2 + max(0,f-c2)**2)**0.5 - f < 0:
@@ -54,5 +58,5 @@ def f(x,y,z):
 
     return False
 
-render.renderAndSave(f, 'screw4iX.stl', 0.1)
+render.renderAndSave(f, f'screw4iX_{l:02.0f}_{p*1000:04.0f}u.stl', p)
 
