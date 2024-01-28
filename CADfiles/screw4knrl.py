@@ -43,20 +43,32 @@ def fzCylRnd(p,h,r):
 @njit
 def f(x,y,z):
     rg = 10 -0.2 -0.05
-    f = 2
+    f = 3
+    hh = 14
+    rho = 14
+    ah = 1
+    nh = 30
+    lt = l + hh
+    rc = rg - 2.4
 
-    s = fzCylRnd((x, y, z), l/2-2*f, rg - 0.6 - 2*f) - f
-    c1 = fzBlkRnd((x, y), (0, 4)) - 1
-    c2 = fzBlkRnd((x, y), (4, 0)) - 1
-    if not (max(0,s)**2 + max(0,f-c1)**2 + max(0,f-c2)**2)**0.5 - f < 0:
+    if z < 0:
         return False
 
     ang = -math.atan2(y,x) + 0/180*math.pi
+    rh = rho + ah*(math.sin(ang *nh)+1)/2
+    s1 = fzCylRnd((x, y, z-lt/2), lt/2-f, rc - f) - f
+    s2 = fzCylRnd((x, y, z-hh/2), hh/2-f, rh - f) - f
+    if not (max(0,f-s1)**2 + max(0,f-s2)**2)**0.5 - f < 0:
+        return True
+    if not (max(0,f-s1+2.4)**2 + max(0,f-s2)**2)**0.5 - f > 0:
+        return False
+
+
     r = 2*screwprofile((4*(2*math.pi/6*1*z/4+ang+math.pi))%(2*math.pi)) + (x**2 + y**2)**0.5
     if r < rg:
         return True
 
     return False
 
-render.renderAndSave(f, f'screw4iX_{l:02.0f}_{p*1000:04.0f}u.stl', p)
+render.renderAndSave(f, f'screw4knrl_{l:02.0f}_{p*1000:04.0f}u.stl', p)
 
