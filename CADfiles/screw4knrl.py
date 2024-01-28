@@ -48,19 +48,20 @@ def f(x,y,z):
     rho = 14
     ah = 1
     nh = 30
-    lt = l + hh
-    rc = rg - 2.4
+    td = 2.4
+    lt = l + hh - td
+    rc = rg - td
 
     if z < 0:
         return False
 
     ang = -math.atan2(y,x) + 0/180*math.pi
-    rh = rho + ah*(math.sin(ang *nh)+1)/2
+    rh = rho - ah*(math.sin(ang *nh)+1)/2
     s1 = fzCylRnd((x, y, z-lt/2), lt/2-f, rc - f) - f
     s2 = fzCylRnd((x, y, z-hh/2), hh/2-f, rh - f) - f
     if not (max(0,f-s1)**2 + max(0,f-s2)**2)**0.5 - f < 0:
         return True
-    if not (max(0,f-s1+2.4)**2 + max(0,f-s2)**2)**0.5 - f > 0:
+    if not (max(0,f-s1+td)**2 + max(0,f-s2)**2)**0.5 - f > 0:
         return False
 
 
