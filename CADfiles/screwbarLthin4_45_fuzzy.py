@@ -41,8 +41,8 @@ def f(x,y,z):
     rgi = rg/1.3
     rge = 3
     l2 = l
-    w2 = w - 1
-    h2 = h - 1
+    w2 = w - 0.17
+    h2 = h - 0.17
 
     cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi
     cy = fuzzCylInfH((x%d-d/2,z%d-d/2,y)) - rgi
@@ -71,5 +71,5 @@ def f(x,y,z):
     return True
 
 render.renderAndSave(f,
-                     f'screwbarL4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_{p*1000:04.0f}u.stl', p)
+                     f'screwbarLthin4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_{p*1000:04.0f}u.stl', p)
 

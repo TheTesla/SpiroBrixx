@@ -31,27 +31,38 @@ def fuzzBlockRound(p,s):
     d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
     return d
 
+
+@njit
+def locks(p,d):
+    x, y, z = np.array(p[:3]) % d - d/2
+    xy_ang = math.atan2(y,x)
+    zx_ang = math.atan2(x,z)
+    yz_ang = math.atan2(z,y)
+    dx = 1 if yz_ang/math.pi*180 % 90 > 45 else -1
+    dy = 1 if zx_ang/math.pi*180 % 90 > 45 else -1
+    dz = 1 if xy_ang/math.pi*180 % 90 > 45 else -1
+    return (dx,dy,dz)
+
 @njit
 def f(x,y,z):
-    rg = 10.1
+    rg = 10.1 #+ 0.05
     ra = rg*1.2
     d = 2*15
     re = 3
-    re2 = 1
     rgi = rg/1.3
     rge = 3
-    l2 = l
-    w2 = w - 1
-    h2 = h - 1
 
     cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi
     cy = fuzzCylInfH((x%d-d/2,z%d-d/2,y)) - rgi
     cz = fuzzCylInfH((x%d-d/2,y%d-d/2,z)) - rgi
 
-    a = fuzzBlockRound((x-l*d/2,y-w*d/2,z-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
-    b = \
-    fuzzBlockRound((x-l2*d/2,y-w2*d/2,z-h2*d/2),(l2*d/2-re2,w2*d/2-re2,h2*d/2-re2)) - re2
-    if (max(0,a+rge)**2 + max(0,rge-b)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cz)**2)**0.5 - rge> 0:
+    lck = locks((x,y,z),d)
+    xb = x + lck[0]/2
+    yb = y + lck[1]/2
+    zb = z + lck[2]/2
+
+    a = fuzzBlockRound((xb-l*d/2,yb-w*d/2,zb-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
+    if (max(0,a+rge)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cz)**2)**0.5 - rge> 0:
         return False
 
     xr = x % d - d/2
@@ -71,5 +82,5 @@ def f(x,y,z):
     return True
 
 render.renderAndSave(f,
-                     f'screwbarL4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_{p*1000:04.0f}u.stl', p)
+                     f'screwbar4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_{p*1000:04.0f}u.stl', p)
 

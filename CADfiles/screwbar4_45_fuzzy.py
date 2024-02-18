@@ -33,7 +33,7 @@ def fuzzBlockRound(p,s):
 
 @njit
 def f(x,y,z):
-    rg = 10.1 + 0.05
+    rg = 10.1 #+ 0.05
     ra = rg*1.2
     d = 2*15
     re = 3

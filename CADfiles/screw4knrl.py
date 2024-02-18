@@ -42,15 +42,15 @@ def fzCylRnd(p,h,r):
 
 @njit
 def f(x,y,z):
-    rg = 10 -0.2 -0.05
-    f = 1.5
+    rg = 10 -0.1 -0.05
+    f = 3
     hh = 14
     rho = 14
     ah = 1
     nh = 30
     td = 2.4
     tdi = 0.6
-    lt = l + hh
+    lt = l + hh + (10 - rg) + tdi
     rti = rg - td
     rto = rg - tdi
 
