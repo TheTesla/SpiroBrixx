@@ -35,12 +35,13 @@ def fuzzBlockRound(p,s):
 @njit
 def locks(p,d):
     x, y, z = np.array(p[:3]) % d - d/2
+    x = p[0]
     xy_ang = math.atan2(y,x)
     zx_ang = math.atan2(x,z)
     yz_ang = math.atan2(z,y)
-    dx = 1 if yz_ang/math.pi*180 % 90 > 45 else -1
-    dy = 1 if zx_ang/math.pi*180 % 90 > 45 else -1
-    dz = 1 if xy_ang/math.pi*180 % 90 > 45 else -1
+    dx = 1 if (4*(2*math.pi/30*1*x/4+yz_ang+(1+0/16)*math.pi))%(2*math.pi) -math.pi > 0 else -1
+    dy = (4*(2*math.pi/8*1*y/4+zx_ang+1.25*math.pi))%(2*math.pi)
+    dz = (4*(2*math.pi/6*1*z/4+xy_ang+1.25*math.pi))%(2*math.pi)
     return (dx,dy,dz)
 
 @njit
@@ -57,11 +58,15 @@ def f(x,y,z):
     cz = fuzzCylInfH((x%d-d/2,y%d-d/2,z)) - rgi
 
     lck = locks((x,y,z),d)
-    xb = x + lck[0]/2
-    yb = y + lck[1]/2
-    zb = z + lck[2]/2
+    xb = x
+    yb = y
+    zb = z
+    #xb = x + lck[0]/2
+    #yb = y + lck[1]/2
+    #zb = z + lck[2]/2
 
     a = fuzzBlockRound((xb-l*d/2,yb-w*d/2,zb-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
+    a = a + lck[0]/2
     if (max(0,a+rge)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cz)**2)**0.5 - rge> 0:
         return False
 

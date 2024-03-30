@@ -31,13 +31,15 @@ def fuzzBlockRound(p,s):
     d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
     return d
 
+rg = 10.1 +0.075
+
 @njit
 def f(x,y,z):
-    rg = 10.1
+    #rg = 10.1
     ra = rg*1.2
     d = 2*15
     re = 3
-    re2 = 1
+    re2 = 2
     re3 = re2
     re4 = re2
     rgi = rg/1.3
@@ -83,5 +85,5 @@ def f(x,y,z):
     return True
 
 render.renderAndSave(f, \
-    f'screwbarY4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_{p*1000:04.0f}u.stl', p)
+        f'screwbarY4_45_{l:02.0f}_{w:02.0f}_{h:02.0f}_rg{rg*1000:05.0f}u_{p*1000:04.0f}u.stl', p)
 

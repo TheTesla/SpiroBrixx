@@ -9,8 +9,9 @@ import sys
 a = sys.argv[1:]
 
 l = float(a[0])
-if len(a) > 1:
-    p = float(a[1])
+trd = float(a[1])
+if len(a) > 2:
+    p = float(a[2])
 else:
     p = 1.0
 
@@ -40,9 +41,12 @@ def fzCylRnd(p,h,r):
     d = (min(r-rc, r+rc, 0)**2 + min(h-z, h+z, 0)**2)**0.5
     return d
 
+rg = 10 -0.1 #-0.05 #-0.175 #-0.05
+
 @njit
 def f(x,y,z):
-    rg = 10 -0.1 -0.05
+    #rg = 10 -0.1 -0.1 #-0.05
+
     f = 3
     hh = 14
     rho = 14
@@ -68,11 +72,11 @@ def f(x,y,z):
         return False
 
 
-    r = 2*screwprofile((4*(2*math.pi/6*1*z/4+ang+math.pi))%(2*math.pi)) + (x**2 + y**2)**0.5
+    r = 2*screwprofile((4*(2*math.pi/6*(1+trd/l)*z/4+ang+math.pi))%(2*math.pi)) + (x**2 + y**2)**0.5
     if r < rg:
         return True
 
     return False
 
-render.renderAndSave(f, f'screw4knrl_{l:02.0f}_{p*1000:04.0f}u.stl', p)
+render.renderAndSave(f, f'screw4knrl_{l:02.0f}_trd{trd*1000:04.0f}pm_rg{rg*1000:04.0f}u_p{p*1000:04.0f}u.stl', p)
 

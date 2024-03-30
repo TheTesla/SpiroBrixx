@@ -31,14 +31,17 @@ def fuzzBlockRound(p,s):
     d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
     return d
 
+rg = 10.1 + 0.075
+
 @njit
 def f(x,y,z):
-    rg = 10.1
+    #rg = 10.1
+    si = 0
     ra = rg*1.2
     d = 2*15
     ww = 0.17
     re = 3
-    re2 = 1
+    re2 = 2
     rgi = rg/1.3
     rge = 3
     l2 = l - ww
@@ -52,7 +55,8 @@ def f(x,y,z):
     a = fuzzBlockRound((x-l*d/2,y-w*d/2,z-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
     b = \
     fuzzBlockRound((x-(l2+ww)*d/2,y-(w2+ww)*d/2,z-h2*d/2),((l2-ww)*d/2-re2,(w2-ww)*d/2-re2,h2*d/2-re2)) - re2
-    if (max(0,a+rge)**2 + max(0,rge-b)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cz)**2)**0.5 - rge> 0:
+    if (max(0,a+rge)**2 + max(0,rge-b)**2 + max(0,rge-cx)**2 + \
+        max(0,rge-cy)**2 + max(0,rge-cz)**2)**0.5 - rge - si> 0:
         return False
 
     xr = x % d - d/2
