@@ -1,10 +1,15 @@
 
 
+resolution = 0.2
+
+
 # four-start thread radius
+pt4 = 1/6
 rt4 = 10
 rt4od = +0.1
 rt4id = -0.1
 rt4ocoreq = 1.3
+rt4jntsphr = 12
 
 rt4o = rt4 + rt4od
 rt4i = rt4 + rt4id
@@ -12,6 +17,7 @@ rt4ocore = rt4/rt4ocoreq
 
 
 # one-start thread radius
+pt1 = 4/6
 rt1 = 10
 rt1od = +0.1
 rt1id = -0.1
@@ -33,5 +39,4 @@ rbifase = 2
 rtifase = 3
 #rtofase = 3
 
-rtjntsphr = 12
 
