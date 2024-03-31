@@ -55,9 +55,10 @@ def new_screwbarI_4(profile, parameters):
     re = float(profile["rbofase"])
     rgi = float(profile["rt4ocore"])
     rge = float(profile["rtifase"])
+    name = f"screwbarI_4_{l:02}_{w:02}_{h:02}"
     @njit
     def f(x, y, z):
         return screwbarI_4((x,y,z), (rg, ra, d, re, rgi, rge), (l, w, h))
-    return f
+    return f, name
 
 

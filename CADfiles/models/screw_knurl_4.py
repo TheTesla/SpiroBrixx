@@ -6,33 +6,10 @@ import math
 import numpy as np
 import sys
 
-a = sys.argv[1:]
-
-l = float(a[0])
-trd = float(a[1])
-if len(a) > 2:
-    p = float(a[2])
-else:
-    p = 1.0
-
 @njit
 def screwprofile(x):
     x = x / (2*math.pi)
     return min(max(3*(x if x < 0.5 else 1-x), 0.3), 1.2)
-
-@njit
-def fzBlkRnd(p,s):
-    if len(s) == 2:
-        x, y = p[:2]
-        l, w = s
-        d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2)**0.5
-        d += max(min(abs(x),w)-w, min(abs(y),l)-l)
-        return d
-    x, y, z = p[:3]
-    l, w, h = s[:3]
-    d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2 + min(h-z, h+z, 0)**2)**0.5
-    d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
-    return d
 
 @njit
 def fzCylRnd(p,h,r):
@@ -41,11 +18,12 @@ def fzCylRnd(p,h,r):
     d = (min(r-rc, r+rc, 0)**2 + min(h-z, h+z, 0)**2)**0.5
     return d
 
-rg = 10 -0.1 #-0.05 #-0.175 #-0.05
 
 @njit
-def f(x,y,z):
-    #rg = 10 -0.1 -0.1 #-0.05
+def screw_knurl_4(p, profile, parameters):
+    x, y, z = p
+    rg, pt4 = profile
+    l = parameters
 
     f = 3
     hh = 14
@@ -72,11 +50,20 @@ def f(x,y,z):
         return False
 
 
-    r = 2*screwprofile((4*(2*math.pi/6*(1+trd/l)*z/4+ang+math.pi))%(2*math.pi)) + (x**2 + y**2)**0.5
+    r = 2*screwprofile((4*(2*math.pi*pt4*z/4+ang+math.pi))%(2*math.pi)) + (x**2 + y**2)**0.5
     if r < rg:
         return True
 
     return False
 
-render.renderAndSave(f, f'screw4knrl_{l:02.0f}_trd{trd*1000:04.0f}pm_rg{rg*1000:04.0f}u_p{p*1000:04.0f}u.stl', p)
+def new_screw_knurl_4(profile, parameters):
+    rg = float(profile["rt4o"])
+    pt4 = float(profile["pt4"])
+    l = float(parameters["l"])
+    name = f"screw_knurl_4_{l:03.0f}mm"
+    @njit
+    def f(x,y,z):
+        return screw_knurl_4((x,y,z), (rg, pt4), (l))
+    return f, name
+
 

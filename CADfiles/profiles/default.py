@@ -1,6 +1,8 @@
 
 
 resolution = 0.2
+extension = "stl"
+target_dir = "build"
 
 
 # four-start thread radius

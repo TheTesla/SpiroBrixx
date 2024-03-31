@@ -27,6 +27,11 @@ def block(p, s, r=1):
                  +(y - ((y if y < w/2 else w/2) if y > -w/2 else -w/2))**2\
                  +(z - ((z if z < h/2 else h/2) if z > -h/2 else -h/2))**2
 
-def output_filename(model, resolution, extension='stl'):
-    return f'{model}_p{resolution*1000:04.0f}u.{extension}'
+def output_filename(model_name, profile):
+    res = float(profile["resolution"])
+    extension = str(profile["extension"])
+    tdir = str(profile["target_dir"])
+    profile_name = profile["name"] if "name" in profile \
+                    else str(profile["__name__"]).split(".")[-1]
+    return f'{tdir}/{model_name}_{profile_name}_p{res*1000:04.0f}u.{extension}'
 

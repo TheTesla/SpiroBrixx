@@ -2,7 +2,8 @@
 
 from xyzcad import render
 
-from models import screwbarI_4
+from common.spirostd import output_filename
+from models import screwbarI_4, screw_knurl_4
 from profiles import default
 
 profile = default.__dict__
@@ -10,7 +11,13 @@ profile = default.__dict__
 
 parameters = {"l": 4, "w": 1, "h": 1}
 
-f = screwbarI_4.new_screwbarI_4(profile, parameters)
+#f, name = screwbarI_4.new_screwbarI_4(profile, parameters)
 
-render.renderAndSave(f, f'build/test.stl', profile["resolution"])
+#render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
+
+parameters = {"l": 35}
+
+f, name = screw_knurl_4.new_screw_knurl_4(profile, parameters)
+
+render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
 
