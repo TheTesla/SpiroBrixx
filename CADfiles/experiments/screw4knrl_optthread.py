@@ -6,10 +6,33 @@ import math
 import numpy as np
 import sys
 
+a = sys.argv[1:]
+
+l = float(a[0])
+trd = float(a[1])
+if len(a) > 2:
+    p = float(a[2])
+else:
+    p = 1.0
+
 @njit
-def screwprofile(x, m=1, n=0):
+def screwprofile(x):
     x = x / (2*math.pi)
-    return max(m*min(3*(x if x < 0.5 else 1-x), 1.2)+n, 0.3)
+    return min(max(5*(x if x < 0.5 else 1-x), 0.3), 1.8)
+
+@njit
+def fzBlkRnd(p,s):
+    if len(s) == 2:
+        x, y = p[:2]
+        l, w = s
+        d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2)**0.5
+        d += max(min(abs(x),w)-w, min(abs(y),l)-l)
+        return d
+    x, y, z = p[:3]
+    l, w, h = s[:3]
+    d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2 + min(h-z, h+z, 0)**2)**0.5
+    d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
+    return d
 
 @njit
 def fzCylRnd(p,h,r):
@@ -18,20 +41,19 @@ def fzCylRnd(p,h,r):
     d = (min(r-rc, r+rc, 0)**2 + min(h-z, h+z, 0)**2)**0.5
     return d
 
+rg = 10 -0.1 -0.2 #-0.05
 
 @njit
-def screw_knurl_4(p, profile, parameters):
-    x, y, z = p
-    rg, pt4, pt4od = profile
-    l = parameters
+def f(x,y,z):
+    #rg = 10 -0.1 -0.1 #-0.05
 
     f = 3
     hh = 14
     rho = 14
     ah = 1
     nh = 30
-    td = 2.4 *1.5
-    tdi = 0.6
+    td = 5.4
+    tdi = 0.0
     lt = l + hh + (10 - rg) + tdi
     rti = rg - td
     rto = rg - tdi
@@ -49,27 +71,12 @@ def screw_knurl_4(p, profile, parameters):
     if not (max(0,f-sto)**2 + max(0,f-sh)**2)**0.5 - f > 0:
         return False
 
-    tn = max((z - lt)/2 + 1, 0)
 
-    pt4o = pt4 * (1 + pt4od/lt)
-
-    r = 2*screwprofile((4*(2*math.pi*pt4o*z/4+ang+math.pi))%(2*math.pi),m=1.5,n=tn) + (x**2 + y**2)**0.5
+    r = 2*screwprofile((4*(2*math.pi/6*(1+trd/l)*z/4+ang+math.pi))%(2*math.pi)) + (x**2 + y**2)**0.5
     if r < rg:
         return True
 
     return False
 
-def new_screw_knurl_4(profile, parameters):
-    rt4o = float(profile["rt4o"])
-    pt4 = float(profile["pt4"])
-    pt4od = float(profile["pt4od"])
-    l = float(parameters["l"])
-    name = f"screw_knurl_4_l{l:03.0f}mm" \
-            +f"_pt4od{pt4od*1000:04.0f}" \
-            +f"_rt4o{rt4o*1000:04.0f}mm"
-    @njit
-    def f(x,y,z):
-        return screw_knurl_4((x,y,z), (rt4o, pt4, pt4od), (l))
-    return f, name
-
+render.renderAndSave(f, f'screw4knrl_optthread_{l:02.0f}_trd{trd*1000:04.0f}pm_rg{rg*1000:04.0f}u_p{p*1000:04.0f}u.stl', p)
 

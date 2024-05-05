@@ -31,7 +31,7 @@ def fuzzBlockRound(p,s):
     d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
     return d
 
-rg = 10.1 +0.075
+rg = 10.1 #+0.075
 
 @njit
 def f(x,y,z):

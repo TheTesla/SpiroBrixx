@@ -9,13 +9,13 @@ from profiles import default
 profile = default.__dict__
 
 
-parameters = {"l": 4, "w": 1, "h": 1}
+#parameters = {"l": 3, "w": 1, "h": 1}
 
 #f, name = screwbarI_4.new_screwbarI_4(profile, parameters)
 
 #render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
 
-parameters = {"l": 35}
+parameters = {"l": 65}
 
 f, name = screw_knurl_4.new_screw_knurl_4(profile, parameters)
 

@@ -7,9 +7,10 @@ target_dir = "build"
 
 # four-start thread radius
 pt4 = 1/6
+pt4od = 5.3
 rt4 = 10
-rt4od = +0.1
-rt4id = -0.1
+rt4od = -0.3
+rt4id = +0.1
 rt4ocoreq = 1.3
 rt4jntsphr = 12
 
