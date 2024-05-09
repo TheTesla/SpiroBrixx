@@ -6,11 +6,11 @@ target_dir = "build"
 
 
 # four-start thread radius
-pt4 = 1/6
-pt4od = 5.3
-rt4 = 10
-rt4od = -0.3
-rt4id = +0.1
+pt4 = 1/6 # pitch
+pt4od = 1.9 # thread of screw shortened
+rt4 = 10 # radius
+rt4od = -0.3 # smaler screw radius
+rt4id = +0.1 # bigger nut radius
 rt4ocoreq = 1.3
 rt4jntsphr = 12
 

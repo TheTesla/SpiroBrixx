@@ -51,7 +51,7 @@ def screw_knurl_4(p, profile, parameters):
 
     tn = max((z - lt)/2 + 1, 0)
 
-    pt4o = pt4 * (1 + pt4od/lt)
+    pt4o = pt4 * (1 + pt4od/(l-2))
 
     r = 2*screwprofile((4*(2*math.pi*pt4o*z/4+ang+math.pi))%(2*math.pi),m=1.5,n=tn) + (x**2 + y**2)**0.5
     if r < rg:
