@@ -2,14 +2,15 @@
 
 from xyzcad import render
 from numba import njit
+from common.spirostd import screw4
 import math
 import numpy as np
 import sys
 
-@njit
-def screwprofile(x, m=1, n=0):
-    x = x / (2*math.pi)
-    return max(m*min(3*(x if x < 0.5 else 1-x), 1.2)+n, 0.3)
+#@njit
+#def screwprofile(x, m=1, n=0):
+#    x = x / (2*math.pi)
+#    return max(m*min(3*(x if x < 0.5 else 1-x), 1.2)+n, 0.3)
 
 @njit
 def fzCylRnd(p,h,r):
@@ -22,12 +23,12 @@ def fzCylRnd(p,h,r):
 @njit
 def screw_knurl_4(p, profile, parameters):
     x, y, z = p
-    rg, pt4, pt4od = profile
+    rg, pt4, pt4od, rh4 = profile
     l = parameters
 
     f = 3
     hh = 14
-    rho = 14
+    rho = rh4
     ah = 1
     nh = 30
     td = 2.4 *1.5
@@ -53,8 +54,9 @@ def screw_knurl_4(p, profile, parameters):
 
     pt4o = pt4 * (1 + pt4od/(l-2))
 
-    r = 2*screwprofile((4*(2*math.pi*pt4o*z/4+ang+math.pi))%(2*math.pi),m=1.5,n=tn) + (x**2 + y**2)**0.5
-    if r < rg:
+    #r = 2*screwprofile((4*(2*math.pi*pt4o*z/4+ang+math.pi))%(2*math.pi),m=1.5,n=tn) + (x**2 + y**2)**0.5
+    #if r < rg:
+    if screw4(x,y,z,rg,pt4o,1.5,tn):
         return True
 
     return False
@@ -63,13 +65,14 @@ def new_screw_knurl_4(profile, parameters):
     rt4o = float(profile["rt4o"])
     pt4 = float(profile["pt4"])
     pt4od = float(profile["pt4od"])
+    rh4 = float(profile["rh4"])
     l = float(parameters["l"])
     name = f"screw_knurl_4_l{l:03.0f}mm" \
             +f"_pt4od{pt4od*1000:04.0f}" \
             +f"_rt4o{rt4o*1000:04.0f}mm"
     @njit
     def f(x,y,z):
-        return screw_knurl_4((x,y,z), (rt4o, pt4, pt4od), (l))
+        return screw_knurl_4((x,y,z), (rt4o, pt4, pt4od, rh4), (l))
     return f, name
 
 

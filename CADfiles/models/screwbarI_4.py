@@ -21,7 +21,7 @@ def fuzzBlockRound(p,s):
 def screwbarI_4(p, profile, parameters):
     x, y, z = p
 
-    rg, ra, d, re, rgi, rge = profile
+    rg, ra, pt4, d, re, rgi, rge = profile
     l, w, h = parameters
 
     cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi
@@ -37,11 +37,11 @@ def screwbarI_4(p, profile, parameters):
     zr = z % d - d/2
     if ra**2 > xr**2 + yr**2 + zr**2:
         return False
-    if screw4(xr,yr,z,rg):
+    if screw4(xr,yr,z,rg,pt4,1.5):
         return False
-    if screw4(xr,zr,-y,rg):
+    if screw4(xr,zr,-y,rg,pt4,1.5):
         return False
-    if screw4(zr,yr,-x,rg):
+    if screw4(zr,yr,-x,rg,pt4,1.5):
         return False
     return True
 
@@ -51,6 +51,7 @@ def new_screwbarI_4(profile, parameters):
     h = int(parameters["h"])
     rg = float(profile["rt4i"])
     ra = float(profile["rt4jntsphr"])
+    pt4 = float(profile["pt4"])
     d = float(profile["dgrid"])
     re = float(profile["rbofase"])
     rgi = float(profile["rt4ocore"])
@@ -58,7 +59,7 @@ def new_screwbarI_4(profile, parameters):
     name = f"screwbarI_4_{l:02}_{w:02}_{h:02}"
     @njit
     def f(x, y, z):
-        return screwbarI_4((x,y,z), (rg, ra, d, re, rgi, rge), (l, w, h))
+        return screwbarI_4((x,y,z), (rg, ra, pt4, d, re, rgi, rge), (l, w, h))
     return f, name
 
 
