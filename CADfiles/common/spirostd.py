@@ -12,7 +12,8 @@ def screwprofile(x, m=1, n=0):
 @njit
 def screw4(x,y,z,rg,pt4o=1,m=1,n=0):
     ang = -math.atan2(y,x)
-    r = 2*screwprofile((4*(2*math.pi*pt4o*z/4+ang+math.pi))%(2*math.pi),m=m,n=n) + (x**2 + y**2)**0.5
+    pp = (4*(2*math.pi*pt4o*z/4+ang+1.25*math.pi))%(2*math.pi)
+    r = 2*screwprofile(pp, m=m, n=n) + (x**2 + y**2)**0.5
     return r < rg
 
 @njit

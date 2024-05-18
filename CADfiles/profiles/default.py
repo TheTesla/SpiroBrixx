@@ -12,12 +12,14 @@ rt4 = 10 # radius
 rt4od = -0.3 # smaler screw radius
 rt4id = +0.1 # bigger nut radius
 rt4ocoreq = 1.5
+rt4icoreq = rt4ocoreq
 rt4jntsphr = 12
 rh4 = 13
 
 rt4o = rt4 + rt4od
 rt4i = rt4 + rt4id
-rt4ocore = rt4/rt4ocoreq
+rt4ocore = rt4o/rt4ocoreq
+rt4icore = rt4i/rt4icoreq
 
 
 # one-start thread radius
@@ -29,7 +31,7 @@ rt1ocoreq = 1.5
 
 rt1o = rt1 + rt1od
 rt1i = rt1 + rt1id
-rt1ocore = rt1/rt1ocoreq
+rt1ocore = rt1i/rt1ocoreq
 
 
 # dimensions
