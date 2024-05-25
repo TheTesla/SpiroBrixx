@@ -23,9 +23,9 @@ def screwbarY_4(p, par):
     x, y, z = p
 
     dtp = 2.4 # thread profile depht
-    rg, ra, pt4, d, re, rt4q, rge, l, w, h = par
+    rg, ra, pt4, d, re, rei, rt4q, rge, l, w, h = par
 
-    re2 = re - 1
+    re2 = rei
     re3 = re2
     re4 = re2
     rgi = rg - dtp * rt4q
@@ -76,11 +76,12 @@ def new_screwbarY_4(profile, parameters):
     pt4 = float(par["pt4"])
     d = float(par["dgrid"])
     re = float(par["rbofase"])
+    rei = float(par["rbifase"])
     rt4q = float(par["rt4icoreq"])
     rge = float(par["rtifase"])
     name = f"screwbarY_4_{l:02}_{w:02}_{h:02}"
     @njit
     def f(x, y, z):
-        return screwbarY_4((x,y,z), (rg, ra, pt4, d, re, rt4q, rge, l, w, h))
+        return screwbarY_4((x,y,z), (rg, ra, pt4, d, re, rei, rt4q, rge, l, w, h))
     return f, name
 

@@ -26,7 +26,7 @@ def screw_knurl_4(p, par):
 
     dtp = 2.4
 
-    rg, pt4, pt4od, rt4q, rh4, l = par
+    rg, pt4, pt4od, pt4odr, rt4q, rh4, l = par
 
     f = 3
     hh = 14
@@ -54,7 +54,7 @@ def screw_knurl_4(p, par):
 
     tn = max((z - lt)/2 + 1, 0)
 
-    pt4o = pt4 * (1 + pt4od/(l-2))
+    pt4o = pt4 * (1 + pt4odr + pt4od/(l-2))
 
     if screw4(x,y,z,rg,pt4o,rt4q,tn):
         return True
@@ -66,7 +66,8 @@ def new_screw_knurl_4(profile, parameters):
     rt4o = float(par["rt4o"])
     pt4 = float(par["pt4"])
     pt4od = float(par["pt4od"])
-    rt4q = float(par["pt4ocoreq"])
+    pt4odr = float(par["pt4odr"])
+    rt4q = float(par["rt4ocoreq"])
     rh4 = float(par["rh4"])
     l = float(par["l"])
     name = f"screw_knurl_4_l{l:03.0f}mm" \
@@ -74,7 +75,7 @@ def new_screw_knurl_4(profile, parameters):
             +f"_rt4o{rt4o*1000:04.0f}mm"
     @njit
     def f(x,y,z):
-        return screw_knurl_4((x,y,z), (rt4o, pt4, pt4od, rt4q, rh4, l))
+        return screw_knurl_4((x,y,z), (rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l))
     return f, name
 
 

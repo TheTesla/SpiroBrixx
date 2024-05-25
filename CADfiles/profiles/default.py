@@ -7,7 +7,9 @@ target_dir = "build"
 
 # four-start thread radius
 pt4 = 1/6 # pitch
-pt4od = 0.90 # thread of screw shortened
+pt4od = 0.9 # thread of screw shortened, absolute value
+pt4odr = 0.000 # thread of screw shortened, relative value
+
 rt4 = 10 # radius
 rt4od = -0.3 # smaler screw radius
 rt4id = +0.1 # bigger nut radius
@@ -42,7 +44,7 @@ dwall = 3
 # fases
 rbofase = 3
 rbifase = 2
-rtifase = 3
+rtifase = 4
 #rtofase = 3
 
 
