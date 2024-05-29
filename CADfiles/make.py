@@ -13,7 +13,7 @@ import time
 
 profile = default.__dict__
 
-def start_proc(p, max_proc=8):
+def start_proc(p, max_proc=1):
     while sum([e.is_alive() for e in p]) > max_proc:
         time.sleep(0.1)
     p[-1].start()
