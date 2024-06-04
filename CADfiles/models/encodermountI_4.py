@@ -2,6 +2,7 @@
 
 from numba import njit
 from common.spirostd import screw4
+from math import sin, cos, pi
 
 
 @njit
@@ -30,22 +31,37 @@ def encodermountI_4(p, par):
     rgencc = 10
     reenc = 1
     dm = 2
+    rmenc = 1.5
+    nmc = 3
+    rmc = 15
+    rgc = 14
+    agc = 15/180*pi
 
-    cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi if abs(x-l*d/2) > rgenc else rge 
+
+    cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi if abs(x-l*d/2) > rgenc else rge
     cy = fuzzCylInfH((x%d-d/2,z%d-d/2,y)) - rgi if abs(x-l*d/2) > rgenc else rge
     cz = fuzzCylInfH((x%d-d/2,y%d-d/2,z)) - rgi if abs(x-l*d/2) > rgenc else rge
-    cccz = fuzzCylInfH((x-l*d/2,y-w*d/2,z)) - rgencc
-    ccz = (max(0,fuzzCylInfH((x-d/2*l,y-d/2*w,z)) - rgenc)**2 + max(0,reenc+dm-z)**2)**0.5 - reenc 
+
+    cc = fuzzCylInfH((z-d,(x-l*d/2)*cos(agc)+(y-w*d/2)*sin(agc),
+                 (x-l*d/2)*sin(agc)+(y-w*d/2)*cos(agc))) \
+            - rgc if y < w*d/2 else rge
+    cccz = (fuzzCylInfH((x-l*d/2,y-w*d/2,z)) - rgencc)*2
+    cmzs = sum([max(0,rge-2*(fuzzCylInfH((x-rmc*cos(ang/nmc*pi*2)-l*d/2,y-rmc*sin(ang/nmc*pi*2)-w*d/2,z))
+                    - rmenc)*2)**2 for ang in range(nmc)])
+    ccz = ((max(0,fuzzCylInfH((x-d/2*l,y-d/2*w,z)) - rgenc)**2 +
+              max(0,reenc+dm-z)**2)**0.5 - reenc)
     ccz = rge if z < dm else ccz
 
     a = fuzzBlockRound((x-l*d/2,y-w*d/2,z-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
-    if (max(0,a+rge)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cz)**2 + max(0,rge-ccz)**2 + max(0,rge-cccz)**2)**0.5 - rge> 0:
+    if (max(0,a+rge)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cc)**2
+        + max(0,rge-cz)**2 + max(0,rge-ccz)**2 + max(0,rge-cccz)**2 +
+        cmzs)**0.5 - rge> 0:
         return False
 
     xr = x % d - d/2
     yr = y % d - d/2
     zr = z % d - d/2
-    if ra**2 > xr**2 + yr**2 + zr**2:
+    if ra**2 > xr**2 + yr**2 + zr**2 and abs(x-l*d/2) > rgenc:
         return False
     if screw4(xr,yr,z, rg, pt4, rt4q) and abs(x-l*d/2) > rgenc:
         return False

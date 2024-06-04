@@ -15,7 +15,7 @@ profile = default.__dict__
 
 def create_encodermountI_4(profile, parameters):
     f, name = encodermountI_4.new_encodermountI_4(profile, parameters)
-    render.renderAndSave(f, output_filename(name, profile), 0.7)#profile["resolution"])
+    render.renderAndSave(f, output_filename(name, profile), 0.2)#profile["resolution"])
 
 def create_notched_screwbarI_4(profile, parameters):
     f, name = notched_screwbarI_4.new_notched_screwbarI_4(profile, parameters)

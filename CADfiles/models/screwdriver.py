@@ -33,8 +33,8 @@ def screwdriver(p, profile, parameters):
     f = 8
     fi = 1
     hh = 70
-    rho = 25
-    rhi = rh4 +0.4
+    rho = 35
+    rhi = rh4 +0.25
     hhi = 14
     ah = 1
     nh = 40
