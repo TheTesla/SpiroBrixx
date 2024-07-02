@@ -104,8 +104,8 @@ def new_screw_knurl_4_mold(profile, parameters):
         ang = -math.atan2(y,x) + 0/180*math.pi
         zo = 0
         if r > rh4+3 and z > 10:
-            zo = (rh4+3-r)*(1+math.sin(10*ang))
-        moldh = fzCylRnd((x, y, zo+z+10-14+fi), 20/2-f, rh4 - f+6) - f
+            zo = (rh4+3-r)*(1+math.sin((10+2*math.cos(ang))*ang))
+        moldh = fzCylRnd((x, y, zo+z+(14-fi+6)/2-14+fi), (14-fi+6)/2-f, rh4 - f+6) - f
         return moldh < 0
 
     @njit
@@ -116,7 +116,7 @@ def new_screw_knurl_4_mold(profile, parameters):
         ang = -math.atan2(y,x) + 0/180*math.pi
         zo = 0
         if r > rh4+3:
-            zo = (rh4+3-r)*(1+math.sin(10*ang))
+            zo = (rh4+3-r)*(1+math.sin((10+2*math.cos(ang))*ang))
         moldm = fzCylRnd((x, y, zo+z-14+fi/2), fi/2-f, rh4 - f+6) - f
         return moldm < 0
 
@@ -128,7 +128,7 @@ def new_screw_knurl_4_mold(profile, parameters):
         ang = -math.atan2(y,x) + 0/180*math.pi
         zo = 0
         if r > rh4+3 and z < 10+14:
-            zo = (rh4+3-r)*(1+math.sin(10*ang))
+            zo = (rh4+3-r)*(1+math.sin((10+2*math.cos(ang))*ang))
         rf = 0
         if z > l + 14:
             rf = max(1,z - l - 14 -1 -2)
