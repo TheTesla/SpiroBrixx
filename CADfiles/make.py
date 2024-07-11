@@ -13,7 +13,7 @@ import time
 
 profile = default.__dict__
 
-def start_proc(p, max_proc=16):
+def start_proc(p, max_proc=8):
     while sum([e.is_alive() for e in p]) > max_proc:
         time.sleep(0.1)
     p[-1].start()
@@ -46,21 +46,28 @@ t = Process(target=create_screwdriver, args=(profile, parameters,))
 t_list.append(t)
 start_proc(t_list)
 
-for x in range(1,5):
+for x in range(1,11):
     print(x)
-    parameters = {"l": x, "w": x, "h": x}
+    parameters = {"l": x, "w": x, "h": 1}
     t = Process(target=create_screwbarL_4, args=(profile, parameters,))
     t_list.append(t)
     start_proc(t_list)
 
-for x in range(1,5):
+for x in range(1,11):
+    print(x)
+    parameters = {"l": 2, "w": 2, "h": x}
+    t = Process(target=create_screwbarL_4, args=(profile, parameters,))
+    t_list.append(t)
+    start_proc(t_list)
+
+for x in range(1,3):
     print(x)
     parameters = {"l": x, "w": x, "h": x}
     t = Process(target=create_screwbarY_4, args=(profile, parameters,))
     t_list.append(t)
     start_proc(t_list)
 
-for h in range(1,13):
+for h in range(1,14):
     print(h)
     parameters = {"l": 1, "w": 1, "h": h}
     t = Process(target=create_screwbarI_4, args=(profile, parameters,))
