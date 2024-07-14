@@ -13,22 +13,18 @@ import time
 
 profile = default.__dict__
 
-def start_proc(p, max_proc=16):
+def start_proc(p, max_proc=2):
     while sum([e.is_alive() for e in p]) > max_proc:
         time.sleep(0.1)
     p[-1].start()
 
-def create_screw_knurl_4_mold_h(profile, parameters):
-    h, m, t, name = screw_knurl_4_mold.new_screw_knurl_4_mold(profile, parameters)
-    render.renderAndSave(h, output_filename(name+"_h", profile), profile["resolution"])
+def create_screw_knurl_4_mold(profile, parameters):
+    h, name = screw_knurl_4_mold.new_screw_knurl_4_mold(profile, parameters)
+    render.renderAndSave(h, output_filename(name, profile), 0.1)
 
-def create_screw_knurl_4_mold_m(profile, parameters):
-    h, m, t, name = screw_knurl_4_mold.new_screw_knurl_4_mold(profile, parameters)
-    render.renderAndSave(m, output_filename(name+"_m", profile), profile["resolution"])
-
-def create_screw_knurl_4_mold_t(profile, parameters):
-    h, m, t, name = screw_knurl_4_mold.new_screw_knurl_4_mold(profile, parameters)
-    render.renderAndSave(t, output_filename(name+"_t", profile), profile["resolution"])
+def create_screw_knurl_4_mold_base(profile, parameters):
+    h, name = screw_knurl_4_mold.new_screw_knurl_4_mold_base(profile, parameters)
+    render.renderAndSave(h, output_filename(name, profile), 0.1)
 
 
 t_list = []
@@ -36,14 +32,11 @@ t_list = []
 for l in [35]:
     print(l)
     parameters = {"l": l}
-    th = Process(target=create_screw_knurl_4_mold_h, args=(profile, parameters,))
+    th = Process(target=create_screw_knurl_4_mold, args=(profile, parameters,))
     t_list.append(th)
     start_proc(t_list)
-    tm = Process(target=create_screw_knurl_4_mold_m, args=(profile, parameters,))
-    t_list.append(tm)
-    start_proc(t_list)
-    tt = Process(target=create_screw_knurl_4_mold_t, args=(profile, parameters,))
-    t_list.append(tt)
+    tb = Process(target=create_screw_knurl_4_mold_base, args=(profile, parameters,))
+    t_list.append(tb)
     start_proc(t_list)
 
 for t in t_list:

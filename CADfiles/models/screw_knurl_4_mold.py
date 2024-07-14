@@ -2,7 +2,7 @@
 
 from xyzcad import render
 from numba import njit
-from common.spirostd import screw4
+from common.spirostd import screw4, block
 import math
 import numpy as np
 import sys
@@ -19,6 +19,13 @@ def fzCylRnd(p,h,r):
     d = (min(r-rc, r+rc, 0)**2 + min(h-z, h+z, 0)**2)**0.5
     return d
 
+@njit
+def fuzzBlockRound(p,s):
+    x, y, z = p
+    w, l, h = s
+    d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2 + min(h-z, h+z, 0)**2)**0.5
+    d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
+    return d
 
 @njit
 def screw_knurl_4(p, par):
@@ -32,7 +39,7 @@ def screw_knurl_4(p, par):
     hh = 14
     rho = rh4
     ah = 1
-    nh = 30
+    nh = 32
     td = dtp * rt4q
     tdi = 0.6
     lt = l + hh + (10 - rg) + tdi
@@ -91,50 +98,74 @@ def new_screw_knurl_4_mold(profile, parameters):
     rt4q = float(par["rt4ocoreq"])
     rh4 = float(par["rh4"])
     l = float(par["l"])
-    f = 0.5
+    f = 1
     fi = 3
     name = f"screw_knurl_4_mold_l{l:03.0f}mm" \
             +f"_pt4od{pt4od*1000:04.0f}" \
             +f"_rt4o{rt4o*1000:04.0f}mm"
     @njit
     def h(x,y,z):
-        if screw_knurl_4((x,y,z), (rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l)):
+        if screw_knurl_4((x,y,z), (rt4o+0.1, pt4, pt4od, pt4odr, rt4q, rh4, l)):
             return False
+        r = (x**2 + y**2)**0.5
+        molds = fzCylRnd((x-z/40, y-z/40, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
+                         +1,rh4 - f+1)
+        if molds > 0 and molds < 4:
+            x = x + abs(2-molds) -2
+            y = y - abs(2-molds) +2
+        if x < 0:
+            return False
+        if y < 0:
+            return False
+        if (z-2*((l+14)/2-f+0.6-1))/6>r:
+            return False
+        blk1 = fuzzBlockRound((x-rh4+f-6-5-z/40,y-z/40,z-(l+14+f)/2),(5,2,(l+14+6*2+f+0.6)/2))-f
+        blk2 = fuzzBlockRound((x-z/40,y-rh4+f-6-5-z/40,z-(l+14+f)/2),(2,5,(l+14+6*2+f+0.6)/2))-f
         r = (x**2 + y**2)**0.5
         ang = -math.atan2(y,x) + 0/180*math.pi
         zo = 0
-        if r > rh4+3 and z > 10:
-            zo = (rh4+3-r)*(1+math.sin((10+2*math.cos(ang))*ang))
-        moldh = fzCylRnd((x, y, zo+z+(14-fi+6)/2-14+fi), (14-fi+6)/2-f, rh4 - f+6) - f
-        return moldh < 0
+        moldh = fzCylRnd((x-z/40, y-z/40, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
+                         +6,rh4 - f+6)
+        return (max(0,moldh-f)**2 + max(0,f-blk1)**2 + max(0,f-blk2)**2)**0.5 - f < 0
 
-    @njit
-    def m(x,y,z):
-        if screw_knurl_4((x,y,z), (rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l)):
-            return False
-        r = (x**2 + y**2)**0.5
-        ang = -math.atan2(y,x) + 0/180*math.pi
-        zo = 0
-        if r > rh4+3:
-            zo = (rh4+3-r)*(1+math.sin((10+2*math.cos(ang))*ang))
-        moldm = fzCylRnd((x, y, zo+z-14+fi/2), fi/2-f, rh4 - f+6) - f
-        return moldm < 0
+    return h, name
 
+def new_screw_knurl_4_mold_base(profile, parameters):
+    par = profile | parameters
+    rt4o = float(par["rt4o"])
+    pt4 = float(par["pt4"])
+    pt4od = float(par["pt4od"])
+    pt4odr = float(par["pt4odr"])
+    rt4q = float(par["rt4ocoreq"])
+    rh4 = float(par["rh4"])
+    l = float(par["l"])
+    f = 1
+    fi = 3
+    name = f"screw_knurl_4_mold_base_l{l:03.0f}mm" \
+            +f"_pt4od{pt4od*1000:04.0f}" \
+            +f"_rt4o{rt4o*1000:04.0f}mm"
     @njit
-    def t(x,y,z):
-        if screw_knurl_4((x,y,z), (rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l)):
-            return False
+    def h(x,y,z):
+        moldho = fzCylRnd((x, y, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
+                         +3,rh4 - f+6+10)
+        blk1 = fuzzBlockRound((abs(x)-rh4+f-6-5-z/120,abs(y)-z/120,z-(l+14+f)/2),\
+                (5,2-0.2,(l+14+6*2+f+0.6)/2))-f
+        blk2 = fuzzBlockRound((abs(x)-z/120,abs(y)-rh4+f-6-5-z/120,z-(l+14+f)/2),\
+                (2-0.2,5,(l+14+6*2+f+0.6)/2))-f
+
         r = (x**2 + y**2)**0.5
         ang = -math.atan2(y,x) + 0/180*math.pi
         zo = 0
-        if r > rh4+3 and z < 10+14:
-            zo = (rh4+3-r)*(1+math.sin((10+2*math.cos(ang))*ang))
-        rf = 0
-        if z > l + 14:
-            rf = max(1,z - l - 14 -1 -2)
-        moldt = fzCylRnd((x, y, zo+z-14-l/2-6/2), l/2-f+6/2, rh4 - f+6) - f
-        return moldt < 0 and r > rf
-    return h, m, t, name
+        moldh = fzCylRnd((abs(x)-z/40, abs(y)-z/40, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
+                         +6,rh4 - f+6)
+        hl = (max(0,moldh-f)**2 \
+            + max(0,f-blk1)**2 + max(0,f-blk2)**2 )**0.5 - 1.01*f
+        if (max(0,moldho-f)**2 + max(0,f-hl)**2)**0.5 -f> 0:
+            return False
+
+        return True
+
+    return h, name
 
 
 
