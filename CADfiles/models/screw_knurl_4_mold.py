@@ -148,16 +148,16 @@ def new_screw_knurl_4_mold_base(profile, parameters):
     def h(x,y,z):
         moldho = fzCylRnd((x, y, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
                          +3,rh4 - f+6+10)
-        blk1 = fuzzBlockRound((abs(x)-rh4+f-6-5-z/120,abs(y)-z/120,z-(l+14+f)/2),\
-                (5,2-0.2,(l+14+6*2+f+0.6)/2))-f
-        blk2 = fuzzBlockRound((abs(x)-z/120,abs(y)-rh4+f-6-5-z/120,z-(l+14+f)/2),\
-                (2-0.2,5,(l+14+6*2+f+0.6)/2))-f
+        blk1 = fuzzBlockRound((abs(x)-rh4+f-6-5-z/80,abs(y)-z/80,z-(l+14+f)/2),\
+                (5-0.05,2-0.15,(l+14+6*2+f+0.6)/2))-f
+        blk2 = fuzzBlockRound((abs(x)-z/80,abs(y)-rh4+f-6-5-z/80,z-(l+14+f)/2),\
+                (2-0.15,5-0.05,(l+14+6*2+f+0.6)/2))-f
 
         r = (x**2 + y**2)**0.5
         ang = -math.atan2(y,x) + 0/180*math.pi
         zo = 0
-        moldh = fzCylRnd((abs(x)-z/40, abs(y)-z/40, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
-                         +6,rh4 - f+6)
+        moldh = fzCylRnd((abs(x)-z/80, abs(y)-z/80, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
+                         +6,rh4 - f+6+0.05)
         hl = (max(0,moldh-f)**2 \
             + max(0,f-blk1)**2 + max(0,f-blk2)**2 )**0.5 - 1.01*f
         if (max(0,moldho-f)**2 + max(0,f-hl)**2)**0.5 -f> 0:
