@@ -46,12 +46,12 @@ t_list = []
 #t_list.append(t)
 #start_proc(t_list)
 
-for x in range(1,5):
-    print(x)
-    parameters = {"l": x, "w": x, "h": 1}
-    t = Process(target=create_screwbarL_4, args=(profile, parameters,))
-    t_list.append(t)
-    start_proc(t_list)
+#for x in range(1,5):
+#    print(x)
+#    parameters = {"l": x, "w": x, "h": 1}
+#    t = Process(target=create_screwbarL_4, args=(profile, parameters,))
+#    t_list.append(t)
+#    start_proc(t_list)
 
 #for x in range(1,11):
 #    print(x)
@@ -60,14 +60,14 @@ for x in range(1,5):
 #    t_list.append(t)
 #    start_proc(t_list)
 #
-#for x in range(1,3):
-#    print(x)
-#    parameters = {"l": x, "w": x, "h": x}
-#    t = Process(target=create_screwbarY_4, args=(profile, parameters,))
-#    t_list.append(t)
-#    start_proc(t_list)
+for x in range(1,3):
+    print(x)
+    parameters = {"l": x, "w": x, "h": x}
+    t = Process(target=create_screwbarY_4, args=(profile, parameters,))
+    t_list.append(t)
+    start_proc(t_list)
 #
-#for h in range(1,14):
+#for h in range(1,5):
 #    print(h)
 #    parameters = {"l": 1, "w": 1, "h": h}
 #    t = Process(target=create_screwbarI_4, args=(profile, parameters,))

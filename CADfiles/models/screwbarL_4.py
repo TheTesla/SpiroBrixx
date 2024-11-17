@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from numba import njit
-from common.spirostd import screw4, block
+from common.spirostd import screw4
 from fuzzyometry import bodies as bd
 from fuzzyometry import combinations as cmb
 
