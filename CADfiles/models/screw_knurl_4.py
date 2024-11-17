@@ -32,7 +32,7 @@ def screw_knurl_4(p, par):
     hh = 14
     rho = rh4
     ah = 1
-    nh = 30
+    nh = 32
     td = dtp * rt4q
     tdi = 0.6
     lt = l + hh + (10 - rg) + tdi

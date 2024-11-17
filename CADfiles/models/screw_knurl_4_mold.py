@@ -111,8 +111,10 @@ def new_screw_knurl_4_mold(profile, parameters):
         molds = fzCylRnd((x-z/40, y-z/40, z-(l+14)/2-0.6/2), (l+14)/2-f+0.6
                          +1,rh4 - f+1)
         if molds > 0 and molds < 4:
-            x = x + abs(2-molds) -2
-            y = y - abs(2-molds) +2
+            x += abs(2-molds) -2
+            #x = x + abs(2-molds) -2
+            y -= abs(2-molds) -2
+            #y = y - abs(2-molds) +2
         if x < 0:
             return False
         if y < 0:
