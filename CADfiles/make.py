@@ -38,48 +38,48 @@ def create_screwdriver(profile, parameters):
     f, name = screwdriver.new_screwdriver(profile, parameters)
     render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
 
-parameters = {"l": 90}
 
 t_list = []
 
-t = Process(target=create_screwdriver, args=(profile, parameters,))
-t_list.append(t)
-start_proc(t_list)
+#parameters = {"l": 90}
+#t = Process(target=create_screwdriver, args=(profile, parameters,))
+#t_list.append(t)
+#start_proc(t_list)
 
-for x in range(1,11):
+for x in range(1,5):
     print(x)
     parameters = {"l": x, "w": x, "h": 1}
     t = Process(target=create_screwbarL_4, args=(profile, parameters,))
     t_list.append(t)
     start_proc(t_list)
 
-for x in range(1,11):
-    print(x)
-    parameters = {"l": 2, "w": 2, "h": x}
-    t = Process(target=create_screwbarL_4, args=(profile, parameters,))
-    t_list.append(t)
-    start_proc(t_list)
-
-for x in range(1,3):
-    print(x)
-    parameters = {"l": x, "w": x, "h": x}
-    t = Process(target=create_screwbarY_4, args=(profile, parameters,))
-    t_list.append(t)
-    start_proc(t_list)
-
-for h in range(1,14):
-    print(h)
-    parameters = {"l": 1, "w": 1, "h": h}
-    t = Process(target=create_screwbarI_4, args=(profile, parameters,))
-    t_list.append(t)
-    start_proc(t_list)
-
-for l in [35, 60, 65, 90, 95, 120]:
-    print(l)
-    parameters = {"l": l}
-    t = Process(target=create_screw_knurl_4, args=(profile, parameters,))
-    t_list.append(t)
-    start_proc(t_list)
+#for x in range(1,11):
+#    print(x)
+#    parameters = {"l": 2, "w": 2, "h": x}
+#    t = Process(target=create_screwbarL_4, args=(profile, parameters,))
+#    t_list.append(t)
+#    start_proc(t_list)
+#
+#for x in range(1,3):
+#    print(x)
+#    parameters = {"l": x, "w": x, "h": x}
+#    t = Process(target=create_screwbarY_4, args=(profile, parameters,))
+#    t_list.append(t)
+#    start_proc(t_list)
+#
+#for h in range(1,14):
+#    print(h)
+#    parameters = {"l": 1, "w": 1, "h": h}
+#    t = Process(target=create_screwbarI_4, args=(profile, parameters,))
+#    t_list.append(t)
+#    start_proc(t_list)
+#
+#for l in [35, 60, 65, 90, 95, 120]:
+#    print(l)
+#    parameters = {"l": l}
+#    t = Process(target=create_screw_knurl_4, args=(profile, parameters,))
+#    t_list.append(t)
+#    start_proc(t_list)
 
 for t in t_list:
     t.join()

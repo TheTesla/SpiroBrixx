@@ -2,20 +2,8 @@
 
 from numba import njit
 from common.spirostd import screw4, block
-
-
-@njit
-def fuzzCylInfH(p):
-    x, y = p[:2]
-    return (x**2 + y**2)**0.5
-
-@njit
-def fuzzBlockRound(p,s):
-    x, y, z = p
-    w, l, h = s
-    d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2 + min(h-z, h+z, 0)**2)**0.5
-    d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
-    return d
+from fuzzyometry import bodies as bd
+from fuzzyometry import combinations as cmb
 
 
 @njit
@@ -33,16 +21,13 @@ def screwbarL_4(p, par):
     w2 = w - 1
     h2 = h
 
-    cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi
-    cy = fuzzCylInfH((x%d-d/2,z%d-d/2,y)) - rgi
-    cz = fuzzCylInfH((x%d-d/2,y%d-d/2,z)) - rgi
+    cx = bd.fz_circle((z%d-d/2,y%d-d/2,x), rgi)
+    cy = bd.fz_circle((x%d-d/2,z%d-d/2,y), rgi)
+    cz = bd.fz_circle((x%d-d/2,y%d-d/2,z), rgi)
 
-    a = fuzzBlockRound((x-l*d/2,y-w*d/2,z-h*d/2),\
-                        (l*d/2-re,w*d/2-re,h*d/2-re)) - re
-    b = fuzzBlockRound((x-l2*d/2,y-w2*d/2,z-h2*d/2),\
-                        (l2*d/2-re2,w2*d/2-re2,h2*d/2-re2)) - re2
-    if (max(0,a+rge)**2 + max(0,rge-b)**2 \
-        + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cz)**2)**0.5 - rge> 0:
+    a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), re)
+    b = bd.fz_cuboid((x-l2*d/2,y-w2*d/2,z-h2*d/2), (l2*d,w2*d,h2*d), re2)
+    if cmb.fz_and_chamfer(rge, a, -b, -cx, -cy, -cz) > 0:
         return False
 
     xr = x % d - d/2
