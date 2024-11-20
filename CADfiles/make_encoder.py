@@ -22,7 +22,7 @@ def create_notched_screwbarI_4(profile, parameters):
     render.renderAndSave(f, output_filename(name, profile), 0.2)#profile["resolution"])
 
 parameters = {"l": 5, "w": 2, "h": 1}
-#create_encodermountI_4(profile, parameters)
+create_encodermountI_4(profile, parameters)
 parameters = {"l": 2, "w": 1, "h": 1}
-create_notched_screwbarI_4(profile, parameters)
+#create_notched_screwbarI_4(profile, parameters)
 

@@ -2,20 +2,10 @@
 
 from numba import njit
 from common.spirostd import screw4
+from fuzzyometry import bodies as bd
+from fuzzyometry import combinations as cmb
 
 
-@njit
-def fuzzCylInfH(p):
-    x, y = p[:2]
-    return (x**2 + y**2)**0.5
-
-@njit
-def fuzzBlockRound(p,s):
-    x, y, z = p
-    w, l, h = s
-    d = (min(w-x, w+x, 0)**2 + min(l-y, l+y, 0)**2 + min(h-z, h+z, 0)**2)**0.5
-    d += max(min(abs(x),w)-w, min(abs(y),l)-l, min(abs(z),h)-h)
-    return d
 
 @njit
 def notched_screwbarI_4(p, par):
@@ -28,14 +18,13 @@ def notched_screwbarI_4(p, par):
 
     rgn = 2.7
 
-    cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi
-    cy = fuzzCylInfH((x%d-d/2,z%d-d/2,y)) - rgi
-    cz = fuzzCylInfH((x%d-d/2,y%d-d/2,z)) - rgi
-    czn = fuzzCylInfH((x-l/2*d,y,z)) - rgn
+    cx = bd.fz_circle((z%d-d/2,y%d-d/2,x), rgi)
+    cy = bd.fz_circle((x%d-d/2,z%d-d/2,y), rgi)
+    cz = bd.fz_circle((x%d-d/2,y%d-d/2,z), rgi)
+    czn = bd.fz_circle((x-l/2*d,y,z), rgn)
 
-    a = fuzzBlockRound((x-l*d/2,y-w*d/2,z-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
-    if (max(0,a+rge)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 +
-        max(0,rge-cz)**2 + max(0,rge-czn)**2)**0.5 - rge> 0:
+    a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), re)
+    if cmb.fz_and_chamfer(rge, a, -cx, -cy, -cz, -czn) > 0:
         return False
 
     xr = x % d - d/2

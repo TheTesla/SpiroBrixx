@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
+import numpy as np
 from numba import njit
 from common.spirostd import screw4
-from math import sin, cos, pi
+from math import atan2, sin, cos, pi, floor
+from fuzzyometry import bodies as bd
+from fuzzyometry import combinations as cmb
 
 
 @njit
@@ -38,24 +41,24 @@ def encodermountI_4(p, par):
     agc = 15/180*pi
 
 
-    cx = fuzzCylInfH((z%d-d/2,y%d-d/2,x)) - rgi if abs(x-l*d/2) > rgenc else rge
-    cy = fuzzCylInfH((x%d-d/2,z%d-d/2,y)) - rgi if abs(x-l*d/2) > rgenc else rge
-    cz = fuzzCylInfH((x%d-d/2,y%d-d/2,z)) - rgi if abs(x-l*d/2) > rgenc else rge
+    cx = bd.fz_circle((z%d-d/2,y%d-d/2,x), rgi) if abs(x-l*d/2) > rgenc else rge
+    cy = bd.fz_circle((x%d-d/2,z%d-d/2,y), rgi) if abs(x-l*d/2) > rgenc else rge
+    cz = bd.fz_circle((x%d-d/2,y%d-d/2,z), rgi) if abs(x-l*d/2) > rgenc else rge
 
-    cc = fuzzCylInfH((z-d,(x-l*d/2)*cos(agc)+(y-w*d/2)*sin(agc),
-                 (x-l*d/2)*sin(agc)+(y-w*d/2)*cos(agc))) \
-            - rgc if y < w*d/2 else rge
-    cccz = (fuzzCylInfH((x-l*d/2,y-w*d/2,z)) - rgencc)*2
-    cmzs = sum([max(0,rge-2*(fuzzCylInfH((x-rmc*cos(ang/nmc*pi*2)-l*d/2,y-rmc*sin(ang/nmc*pi*2)-w*d/2,z))
-                    - rmenc)*2)**2 for ang in range(nmc)])
-    ccz = ((max(0,fuzzCylInfH((x-d/2*l,y-d/2*w,z)) - rgenc)**2 +
+    cc = bd.fz_circle((z-d,(x-l*d/2)*cos(agc)+(y-w*d/2)*sin(agc), \
+                 (x-l*d/2)*sin(agc)+(y-w*d/2)*cos(agc)), rgc) \
+                         if y < w*d/2 else rge
+    cccz = bd.fz_circle((x-l*d/2,y-w*d/2,z), rgencc)*2
+    angcmz = floor(0.5+(atan2(y-w*d/2,x-l*d/2)/pi/2)*nmc)/nmc*pi*2
+    xcmz = x-rmc*cos(angcmz)-l*d/2
+    ycmz = y-rmc*sin(angcmz)-w*d/2
+    cmz = 2*2*bd.fz_circle((xcmz,ycmz,z), rmenc)
+    ccz = ((max(0,bd.fz_circle((x-d/2*l,y-d/2*w,z), rgenc))**2 +
               max(0,reenc+dm-z)**2)**0.5 - reenc)
     ccz = rge if z < dm else ccz
 
-    a = fuzzBlockRound((x-l*d/2,y-w*d/2,z-h*d/2),(l*d/2-re,w*d/2-re,h*d/2-re)) - re
-    if (max(0,a+rge)**2 + max(0,rge-cx)**2 + max(0,rge-cy)**2 + max(0,rge-cc)**2
-        + max(0,rge-cz)**2 + max(0,rge-ccz)**2 + max(0,rge-cccz)**2 +
-        cmzs)**0.5 - rge> 0:
+    a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), re)
+    if cmb.fz_and_chamfer(rge, a, -cx, -cy, -cz, -cc, -ccz, -cccz, -cmz) > 0:
         return False
 
     xr = x % d - d/2
