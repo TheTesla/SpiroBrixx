@@ -13,22 +13,50 @@ import time
 
 profile = default.__dict__
 
+def convert_params(profile, parameters):
+    par = profile | parameters
+    l = int(par["l"])
+    w = int(par["w"])
+    h = int(par["h"])
+    rg = float(par["rt4i"])
+    ra = float(par["rt4jntsphr"])
+    pt4 = float(par["pt4"])
+    d = float(par["dgrid"])
+    re = float(par["rbofase"])
+    rei = float(par["rbifase"])
+    rt4q = float(par["rt4icoreq"])
+    rge = float(par["rtifase"])
+    dtp4 = float(par["dtp4"])
+    name = f"_{l:02}_{w:02}_{h:02}"
+    return (rg, ra, pt4, d, re, rei, rt4q, rge, l, w, h, dtp4), name
+
+
 def start_proc(p, max_proc=3):
     while sum([e.is_alive() for e in p]) >= max_proc:
         time.sleep(0.1)
     p[-1].start()
 
 def create_screwbarL_4(profile, parameters):
-    f, name = screwbarL_4.new_screwbarL_4(profile, parameters)
-    render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
+    params, name = convert_params(profile, parameters)
+    render.renderAndSave(screwbarL_4.screwbarL_4,
+                         output_filename("screwbarL_4"+name, profile),
+                         profile["resolution"], params)
+    #f, name = screwbarL_4.new_screwbarL_4(profile, parameters)
+    #render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
 
 def create_screwbarY_4(profile, parameters):
-    f, name = screwbarY_4.new_screwbarY_4(profile, parameters)
-    render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
+    params, name = convert_params(profile, parameters)
+    render.renderAndSave(screwbarY_4.screwbarY_4,
+                         output_filename("screwbarY_4"+name, profile),
+                         profile["resolution"], params)
+    #f, name = screwbarY_4.new_screwbarY_4(profile, parameters)
+    #render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
 
 def create_screwbarI_4(profile, parameters):
-    f, name = screwbarI_4.new_screwbarI_4(profile, parameters)
-    render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
+    params, name = convert_params(profile, parameters)
+    render.renderAndSave(screwbarI_4.screwbarI_4,
+                         output_filename("screwbarI_4"+name, profile),
+                         profile["resolution"], params)
 
 def create_screw_knurl_4(profile, parameters):
     f, name = screw_knurl_4.new_screw_knurl_4(profile, parameters)
@@ -39,7 +67,9 @@ def create_screwdriver(profile, parameters):
     render.renderAndSave(f, output_filename(name, profile), profile["resolution"])
 
 
-t_list = []
+#t_list = []
+
+#profile["resolution"] = 0.8
 
 #parameters = {"l": 90}
 #t = Process(target=create_screwdriver, args=(profile, parameters,))
@@ -67,20 +97,22 @@ t_list = []
 #    t_list.append(t)
 #    start_proc(t_list)
 #
-#for h in range(1,5):
-#    print(h)
-#    parameters = {"l": 1, "w": 1, "h": h}
-#    t = Process(target=create_screwbarI_4, args=(profile, parameters,))
+for h in range(3,4):
+    print(h)
+    parameters = {"l": 1, "w": 1, "h": h}
+    create_screwbarI_4(profile, parameters)
+    create_screwbarL_4(profile, parameters)
+    create_screwbarY_4(profile, parameters)
+
+
+
+#for l in [35, 60, 65, 90, 95]:
+#    print(l)
+#    parameters = {"l": l}
+#    t = Process(target=create_screw_knurl_4, args=(profile, parameters,))
 #    t_list.append(t)
 #    start_proc(t_list)
-#
-for l in [35]:
-    print(l)
-    parameters = {"l": l}
-    t = Process(target=create_screw_knurl_4, args=(profile, parameters,))
-    t_list.append(t)
-    start_proc(t_list)
 
-for t in t_list:
-    t.join()
+#for t in t_list:
+#    t.join()
 

@@ -30,9 +30,9 @@ def block(p, s, r=1):
 
 def output_filename(model_name, profile):
     res = float(profile["resolution"])
-    extension = str(profile["extension"])
+    #extension = str(profile["extension"])
     tdir = str(profile["target_dir"])
     profile_name = profile["name"] if "name" in profile \
                     else str(profile["__name__"]).split(".")[-1]
-    return f'{tdir}/{model_name}_{profile_name}_p{res*1000:04.0f}u.{extension}'
+    return f'{tdir}/{model_name}_{profile_name}_p{res*1000:04.0f}u'
 

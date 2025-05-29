@@ -7,11 +7,11 @@ from fuzzyometry import combinations as cmb
 
 
 @njit
-def screwbarI_4(p, par):
-    x, y, z = p
+def screwbarI_4(p):
+    x, y, z, par = p
 
-    dtp = 2.4 # thread profile depht
-    rg, ra, pt4, d, re, rt4q, rge, l, w, h = par
+    #dtp = 2.4 # thread profile depht
+    rg, ra, pt4, d, re, rei, rt4q, rge, l, w, h, dtp = par
 
     rgi = rg - dtp * rt4q
 
@@ -36,22 +36,20 @@ def screwbarI_4(p, par):
         return False
     return True
 
-def new_screwbarI_4(profile, parameters):
-    par = profile | parameters
-    l = int(par["l"])
-    w = int(par["w"])
-    h = int(par["h"])
-    rg = float(par["rt4i"])
-    ra = float(par["rt4jntsphr"])
-    pt4 = float(par["pt4"])
-    d = float(par["dgrid"])
-    re = float(par["rbofase"])
-    rt4q = float(par["rt4icoreq"])
-    rge = float(par["rtifase"])
-    name = f"screwbarI_4_{l:02}_{w:02}_{h:02}"
-    @njit
-    def f(x, y, z):
-        return screwbarI_4((x,y,z), (rg, ra, pt4, d, re, rt4q, rge, l, w, h))
-    return f, name
-
+#def params_screwbarI_4(profile, parameters):
+#    par = profile | parameters
+#    l = int(par["l"])
+#    w = int(par["w"])
+#    h = int(par["h"])
+#    rg = float(par["rt4i"])
+#    ra = float(par["rt4jntsphr"])
+#    pt4 = float(par["pt4"])
+#    d = float(par["dgrid"])
+#    re = float(par["rbofase"])
+#    rt4q = float(par["rt4icoreq"])
+#    rge = float(par["rtifase"])
+#    dpt4 = float(par["dpt4"])
+#    name = f"screwbarI_4_{l:02}_{w:02}_{h:02}"
+#    return (rg, ra, pt4, d, re, rt4q, rge, l, w, h, dpt4), name
+#
 
