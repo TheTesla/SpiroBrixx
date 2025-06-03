@@ -12,7 +12,7 @@ pt4odr = 0.000 # thread of screw shortened, relative value
 
 rt4 = 10 # radius
 rt4od = -0.3 # smaler screw radius
-rt4id = +0.1 +0.05# bigger nut radius
+rt4id = +0.1 +0.3# bigger nut radius
 rt4ocoreq = 1.5
 rt4icoreq = rt4ocoreq
 rt4jntsphr = 12
