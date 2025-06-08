@@ -37,9 +37,9 @@ def model_function(p):
     #cx = bd.fz_circle((z%d-d/2,y%d-d/2,x), rgi)
     #cy = bd.fz_circle((x%d-d/2,z%d-d/2,y), rgi)
     #cz = bd.fz_circle((x%d-d/2,y%d-d/2,z), rgi)
-    cx = thrd.fz_thread((zr,yr,pt4*-x+np.pi/4.2), rg/4*3, 4, dtp/3*2, 1.0)
-    cy = thrd.fz_thread((xr,zr,pt4*-y+np.pi/4.2), rg/4*3, 4, dtp/3*2, 1.0)
-    cz = thrd.fz_thread((xr,yr,pt4*z+np.pi/4.2), rg/4*3, 4, dtp/3*2, 1.0)
+    cx = thrd.fz_thread((yr,zr,pt4*x-0.25), rg/4*3, 4, dtp/3*2, 1.0)
+    cy = thrd.fz_thread((zr,xr,pt4*y-0.25), rg/4*3, 4, dtp/3*2, 1.0)
+    cz = thrd.fz_thread((xr,yr,pt4*z-0.25), rg/4*3, 4, dtp/3*2, 1.0)
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), re)
     if cmb.fz_and_chamfer(0.5*rge, a, -cx, -cy, -cz) > 0:

@@ -4,7 +4,7 @@ from xyzcad import render
 
 from common.spirostd import output_filename
 from models import screwbarL_4, screwbarY_4, screwbarI_4, screwbarI_4_new, screw_knurl_4, screwdriver
-from profiles import default0200
+from profiles import default0350
 
 from numba.typed import Dict
 from numba import njit
@@ -14,7 +14,7 @@ from multiprocessing import Process
 import time
 
 
-profile = default0200.__dict__
+profile = default0350.__dict__
 
 def convert_params(profile, parameters):
     par = profile | parameters
@@ -81,7 +81,8 @@ def create_screwdriver(profile, parameters):
 
 @njit
 def screwbar_diff(p):
-    a = screwbarI_4.model_function(p)
+    #a = screwbarI_4.model_function(p)
+    a = screwbarI_4_new.model_function((-p[0]+30, -p[1]+30, p[2], p[3]))
     b = screwbarI_4_new.model_function(p)
     if a and b:
         return 1
@@ -101,6 +102,7 @@ parameters = {"l": 1, "w": 1, "h": 1}
 params, name = screwbarI_4.convert_params(profile | parameters)
 render.renderAndSave(screwbar_diff, output_filename(name, profile)+"_diff.obj",
                          profile["resolution"], params)
+
 #t_list = []
 
 #profile["resolution"] = 0.8
@@ -132,11 +134,11 @@ render.renderAndSave(screwbar_diff, output_filename(name, profile)+"_diff.obj",
 #    start_proc(t_list)
 #
 
-for h in range(3,4):
-    print(h)
-    parameters = {"l": 1, "w": 1, "h": h, "resolution": 0.2}
-    make_model(screwbarI_4_new, profile | parameters)
-    make_model(screwbarI_4, profile | parameters)
+#for h in range(3,4):
+    #print(h)
+parameters = {"l": 1, "w": 1, "h": 1}
+make_model(screwbarI_4_new, profile | parameters)
+#make_model(screwbarI_4, profile | parameters)
     #create_screwbarI_4_dict(profile, parameters)
     #create_screwbarI_4(profile, parameters)
     #create_screwbarL_4(profile, parameters)
