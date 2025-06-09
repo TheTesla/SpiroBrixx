@@ -17,7 +17,7 @@ def convert_params(params):
     rbofase = float(par["rbofase"])
     rtifase = float(par["rtifase"])
     dtp4 = float(par["dtp4"])
-    name = f"scrbofasewbarI_4_new_{l:02}_{w:02}_{h:02}"
+    name = f"screwbarI_4_new_{l:02}_{w:02}_{h:02}"
     return (rt4i, pt4, d, rbofase, rtifase, l, w, h, dtp4), name
 
 

@@ -98,10 +98,10 @@ def make_model(model, params):
     render.renderAndSave(model.model_function, output_filename(name, profile),
                          profile["resolution"], params)
 
-parameters = {"l": 1, "w": 1, "h": 1}
-params, name = screwbarI_4_new.convert_params(profile | parameters)
-render.renderAndSave(screwbar_diff, output_filename(name, profile)+"_diff.obj",
-                         profile["resolution"], params)
+#parameters = {"l": 1, "w": 1, "h": 1}
+#params, name = screwbarI_4_new.convert_params(profile | parameters)
+#render.renderAndSave(screwbar_diff, output_filename(name, profile)+"_diff.obj",
+#                         profile["resolution"], params)
 
 #t_list = []
 
@@ -136,7 +136,9 @@ render.renderAndSave(screwbar_diff, output_filename(name, profile)+"_diff.obj",
 
 #for h in range(3,4):
     #print(h)
-parameters = {"l": 1, "w": 1, "h": 1}
+parameters = {"l": 3, "w": 3, "h": 3}
+make_model(screwbarY_4, profile | parameters)
+make_model(screwbarL_4, profile | parameters)
 make_model(screwbarI_4_new, profile | parameters)
 #make_model(screwbarI_4, profile | parameters)
     #create_screwbarI_4_dict(profile, parameters)
