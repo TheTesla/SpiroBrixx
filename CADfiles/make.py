@@ -136,10 +136,12 @@ def make_model(model, params):
 
 #for h in range(3,4):
     #print(h)
+parameters = {"l": 35} #, "w": 3, "h": 3}
+make_model(screw_knurl_4, profile | parameters)
 parameters = {"l": 3, "w": 3, "h": 3}
-make_model(screwbarY_4, profile | parameters)
-make_model(screwbarL_4, profile | parameters)
-make_model(screwbarI_4_new, profile | parameters)
+#make_model(screwbarY_4, profile | parameters)
+#make_model(screwbarL_4, profile | parameters)
+#make_model(screwbarI_4_new, profile | parameters)
 #make_model(screwbarI_4, profile | parameters)
     #create_screwbarI_4_dict(profile, parameters)
     #create_screwbarI_4(profile, parameters)
