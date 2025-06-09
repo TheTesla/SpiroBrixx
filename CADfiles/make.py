@@ -99,7 +99,7 @@ def make_model(model, params):
                          profile["resolution"], params)
 
 parameters = {"l": 1, "w": 1, "h": 1}
-params, name = screwbarI_4.convert_params(profile | parameters)
+params, name = screwbarI_4_new.convert_params(profile | parameters)
 render.renderAndSave(screwbar_diff, output_filename(name, profile)+"_diff.obj",
                          profile["resolution"], params)
 
