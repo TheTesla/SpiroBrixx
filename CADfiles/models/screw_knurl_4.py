@@ -28,7 +28,7 @@ def convert_params(params):
 def model_function(p):
     x, y, z, par = p
 
-    dtp = 2.4
+    #dtp = 2.4
 
     #rg, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4 = par
     rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4 = par
@@ -38,13 +38,13 @@ def model_function(p):
     f = 3
     hh = 14
     rho = rh4
-    ah = 1.
+    ah = 1. *0.5
     nh = 32
-    td = dtp * rt4q
+    #td = dtp * rt4q
     tdi = 0.6
     lt = l + hh + (10 - rg) + tdi
-    rti = rg - td
-    rto = rg - tdi
+    #rti = rg - td
+    #rto = rg - tdi
 
     #if z < 0:
     #    return False
@@ -53,10 +53,10 @@ def model_function(p):
 
 
     pt4o = pt4 * (1 + pt4odr + pt4od/(l-2))
-    tz = thrd.fz_thread((x,y,pt4o*z), rt4o/4*3, 4, dtp4/3*2, 1.0)
-    th = thrd.fz_thread((x,y,0.1), rh4, nh, ah, 1.0)
+    tz = 3*thrd.fz_thread((x,y,pt4o*z), rt4o/4*3, 4, dtp4/3*2, 1.0)
+    th = 3*thrd.fz_thread((x,y,0.1), rh4, nh, ah, 1.0)
 
-    thread = cmb.fz_and_chamfer(f, tz, -z-lt, z)
+    thread = cmb.fz_and_chamfer(f, tz, -z-lt, z+hh)
     head = cmb.fz_and_chamfer(f, th, -z-hh, z)
 
     if cmb.fz_or_chamfer(f, thread, head) > 0:
