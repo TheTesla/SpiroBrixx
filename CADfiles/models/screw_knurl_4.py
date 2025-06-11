@@ -18,10 +18,13 @@ def convert_params(params):
     rh4 = float(par["rh4"])
     l = float(par["l"])
     dtp4 = float(par["dtp4"])
+    lh = float(par["lhead"])
+    nh = float(par["nhead"])
+    ah = float(par["ahead"])
     name = f"screw_knurl_4_l{l:03.0f}mm" \
             +f"_pt4od{pt4od*1000:04.0f}" \
             +f"_rt4o{rt4o*1000:04.0f}mm"
-    return (rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4), name
+    return (rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4, lh, nh, ah), name
 
 
 @njit
@@ -31,15 +34,15 @@ def model_function(p):
     #dtp = 2.4
 
     #rg, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4 = par
-    rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4 = par
+    rt4o, pt4, pt4od, pt4odr, rt4q, rh4, l, dtp4, lh, nh, ah = par
 
     rg = rt4o
 
     f = 3
-    hh = 14
+    hh = lh
     rho = rh4
-    ah = 1. *0.5
-    nh = 32
+    #ah = 1. *0.5
+    #nh = 32
     #td = dtp * rt4q
     tdi = 0.6
     lt = l + hh + (10 - rg) + tdi

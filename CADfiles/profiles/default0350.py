@@ -50,4 +50,7 @@ rbifase = 2
 rtifase = 3
 #rtofase = 3
 
-
+# screw head
+lhead = 13
+nhead = 32
+ahead = 0.5
