@@ -48,7 +48,7 @@ dwall = 3
 rbofase = 3
 rbifase = 2
 rtifase = 3
-#rtofase = 3
+rtofase = 3
 
 # screw head
 lhead = 13
