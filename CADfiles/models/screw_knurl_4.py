@@ -9,7 +9,6 @@ import numpy as np
 import sys
 
 
-
 def convert_params(params):
     par = params
     rt4o = float(par["rt4o"])
@@ -45,7 +44,7 @@ def model_function(p):
     pt4o = pt4 * (1 + pt4odr + pt4od/l)
 
     tz = thrd.fz_thread((x,y,pt4o*z), rt4o/4*3, 4, dtp4/3*2, 1.0)
-    th = thrd.fz_thread((x,y,0.1), rh4, nh, ah, 1.0)
+    th = thrd.fz_thread((x,y,0.1), rh4, nh, ah, 3.0)
     thread = cmb.fz_and_chamfer(rtof, tz, -z-lt, z+lh)
     head = cmb.fz_and_chamfer(rbof, th, -z-lh, z)
     if cmb.fz_or_chamfer(rtif, thread, head) > 0:
