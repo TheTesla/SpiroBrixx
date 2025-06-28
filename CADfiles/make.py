@@ -4,8 +4,9 @@ from xyzcad import render
 
 from common.spirostd import output_filename
 from models import screwbarL_4, screwbarY_4, screwbarI_4, screw_knurl_4, \
+        screw_knurl_1, \
         thin_screwbarI_4, thin_screwbarL_4_in, thin_screwbarL_4_out, \
-        thin_screwbarUU_4_in, thin_screwbarUU_4_out, screwdriver
+        thin_screwbarUU_4_in, thin_screwbarUU_4_out, screwdriver, screw_flat_4
 from profiles import defaultnew
 
 from numba.typed import Dict
@@ -138,17 +139,19 @@ def make_model(model, params):
 
 #for h in range(3,4):
     #print(h)
-#parameters = {"l": 35} #, "w": 3, "h": 3}
+parameters = {"l": 35} #, "w": 3, "h": 3}
+make_model(screw_knurl_1, profile | parameters)
 #make_model(screw_knurl_4, profile | parameters)
-parameters = {"l": 3, "w": 3, "h": 3}
+#make_model(screw_flat_4, profile | parameters)
+#parameters = {"l": 3, "w": 3, "h": 3}
 #make_model(screwbarY_4, profile | parameters)
 #make_model(screwbarL_4, profile | parameters)
 #make_model(screwbarI_4, profile | parameters)
 #make_model(thin_screwbarI_4, profile | parameters)
 #make_model(thin_screwbarL_4_in, profile | parameters)
 #make_model(thin_screwbarL_4_out, profile | parameters)
-make_model(thin_screwbarUU_4_in, profile | parameters)
-make_model(thin_screwbarUU_4_out, profile | parameters)
+#make_model(thin_screwbarUU_4_in, profile | parameters)
+#make_model(thin_screwbarUU_4_out, profile | parameters)
 #make_model(screwbarI_4, profile | parameters)
     #create_screwbarI_4_dict(profile, parameters)
     #create_screwbarI_4(profile, parameters)

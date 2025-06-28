@@ -18,6 +18,9 @@ rt4icoreq = rt4ocoreq
 rt4jntsphr = 12
 dtp4 = 1.6
 
+# flat screw
+ds4 = 10.0 # thickness
+
 rt4o = rt4 + rt4od
 rt4i = rt4 + rt4id
 rt4ocore = rt4o/rt4ocoreq
@@ -25,7 +28,10 @@ rt4icore = rt4i/rt4icoreq
 
 
 # one-start thread radius
-pt1 = 4 * pt4
+pt1 = pt4
+pt1od = 1.0
+pt1odr = 0.000
+
 rt1 = rt4
 rt1od = rt4od
 rt1id = rt4id
@@ -48,6 +54,7 @@ rbofase = 3
 rbifase = 2
 rtifase = 3
 rtofase = 3
+rtofasec = 1 # fase at cut of flat screw
 
 # screw head
 lhead = 14
@@ -55,3 +62,4 @@ nhead = 32
 ahead = 0.5
 rhofase = 2.5
 rh4 = 12.5
+rh1 = 12.5
