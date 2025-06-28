@@ -16,7 +16,7 @@ def convert_params(params):
     pt4od = float(par["pt4od"])
     pt4odr = float(par["pt4odr"])
     rt4q = float(par["rt4ocoreq"])
-    rbof = float(par["rbofase"])
+    rhof = float(par["rhofase"])
     rtif = float(par["rtifase"])
     rtof = float(par["rtofase"])
     rh4 = float(par["rh4"])
@@ -28,7 +28,7 @@ def convert_params(params):
     name = f"screw_knurl_4_l{l:03.0f}mm" \
             +f"_pt4od{pt4od*1000:04.0f}" \
             +f"_rt4o{rt4o*1000:04.0f}mm"
-    par_tpl = (rt4o, pt4, pt4od, pt4odr, rt4q, rbof,\
+    par_tpl = (rt4o, pt4, pt4od, pt4odr, rt4q, rhof,\
                rtof, rtif, rh4, l, dtp4, lh, nh, ah)
     return par_tpl, name
 
@@ -37,16 +37,16 @@ def convert_params(params):
 def model_function(p):
     x, y, z, par = p
 
-    rt4o, pt4, pt4od, pt4odr, rt4q, rbof, \
+    rt4o, pt4, pt4od, pt4odr, rt4q, rhof, \
     rtof, rtif, rh4, l, dtp4, lh, nh, ah = par
 
     lt = l + lh
     pt4o = pt4 * (1 + pt4odr + pt4od/l)
 
-    tz = thrd.fz_thread((x,y,pt4o*z), rt4o/4*3, 4, dtp4/3*2, 1.0)
-    th = thrd.fz_thread((x,y,0.1), rh4, nh, ah, 3.0)
-    thread = cmb.fz_and_chamfer(rtof, tz, -z-lt, z+lh)
-    head = cmb.fz_and_chamfer(rbof, th, -z-lh, z)
+    tz = thrd.fz_thread((x,y,pt4o*z), rt4o, 4, dtp4, 1.0)
+    th = thrd.fz_thread((x,y,0.1), rh4, nh, ah, rhof)
+    thread = cmb.fz_and_chamfer(rtof, tz, z-lt, -z+lh)
+    head = cmb.fz_and_chamfer(rhof, th, z-lh, -z)
     if cmb.fz_or_chamfer(rtif, thread, head) > 0:
         return False
     return True

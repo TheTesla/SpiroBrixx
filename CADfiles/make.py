@@ -3,8 +3,9 @@
 from xyzcad import render
 
 from common.spirostd import output_filename
-from models import screwbarL_4, screwbarY_4, screwbarI_4, screwbarI_4_new, screw_knurl_4, screwdriver
-from profiles import default0350
+from models import screwbarL_4, screwbarY_4, screwbarI_4, screw_knurl_4, \
+        thin_screwbarI_4, thin_screwbarL_4_in, thin_screwbarL_4_out, screwdriver
+from profiles import defaultnew
 
 from numba.typed import Dict
 from numba import njit
@@ -14,7 +15,7 @@ from multiprocessing import Process
 import time
 
 
-profile = default0350.__dict__
+profile = defaultnew.__dict__
 
 def convert_params(profile, parameters):
     par = profile | parameters
@@ -136,12 +137,15 @@ def make_model(model, params):
 
 #for h in range(3,4):
     #print(h)
-parameters = {"l": 35} #, "w": 3, "h": 3}
-make_model(screw_knurl_4, profile | parameters)
+#parameters = {"l": 35} #, "w": 3, "h": 3}
+#make_model(screw_knurl_4, profile | parameters)
 parameters = {"l": 3, "w": 3, "h": 3}
 #make_model(screwbarY_4, profile | parameters)
-#make_model(screwbarL_4, profile | parameters)
-#make_model(screwbarI_4_new, profile | parameters)
+make_model(screwbarL_4, profile | parameters)
+#make_model(screwbarI_4, profile | parameters)
+make_model(thin_screwbarI_4, profile | parameters)
+make_model(thin_screwbarL_4_in, profile | parameters)
+make_model(thin_screwbarL_4_out, profile | parameters)
 #make_model(screwbarI_4, profile | parameters)
     #create_screwbarI_4_dict(profile, parameters)
     #create_screwbarI_4(profile, parameters)

@@ -10,14 +10,13 @@ pt4 = 1/6 # pitch
 pt4od = 0.9 # thread of screw shortened, absolute value
 pt4odr = 0.000 # thread of screw shortened, relative value
 
-rt4 = 10 # radius
-rt4od = -0.3 +0.35# smaler screw radius
-rt4id = +0.1 +0.35# bigger nut radius
+rt4 = 7.76 # radius
+rt4od = -0.225 # smaler screw radius
+rt4id = +0.075 # bigger nut radius
 rt4ocoreq = 1.5
 rt4icoreq = rt4ocoreq
 rt4jntsphr = 12
-rh4 = 13
-dtp4 = 2.4
+dtp4 = 1.6
 
 rt4o = rt4 + rt4od
 rt4i = rt4 + rt4id
@@ -26,12 +25,12 @@ rt4icore = rt4i/rt4icoreq
 
 
 # one-start thread radius
-pt1 = 4/6
-rt1 = 10
-rt1od = +0.1
-rt1id = -0.1
-rt1ocoreq = 1.5
-dtp1 = 2.4
+pt1 = 4 * pt4
+rt1 = rt4
+rt1od = rt4od
+rt1id = rt4id
+rt1ocoreq = rt4ocoreq
+dtp1 = dtp4
 
 rt1o = rt1 + rt1od
 rt1i = rt1 + rt1id
@@ -51,6 +50,8 @@ rtifase = 3
 rtofase = 3
 
 # screw head
-lhead = 13
+lhead = 14
 nhead = 32
 ahead = 0.5
+rhofase = 2.5
+rh4 = 12.5

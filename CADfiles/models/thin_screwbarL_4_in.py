@@ -4,7 +4,6 @@ from numba import njit
 from fuzzyometry import bodies as bd
 from fuzzyometry import threads as thrd
 from fuzzyometry import combinations as cmb
-import numpy as np
 
 def convert_params(params):
     par = params
@@ -14,17 +13,19 @@ def convert_params(params):
     rt4i = float(par["rt4i"])
     pt4 = float(par["pt4"])
     d = float(par["dgrid"])
+    dwall = float(par["dwall"])
     rbofase = float(par["rbofase"])
+    rbifase = float(par["rbifase"])
     rtifase = float(par["rtifase"])
     dtp4 = float(par["dtp4"])
-    name = f"screwbarI_4_{l:02}_{w:02}_{h:02}"
-    return (rt4i, pt4, d, rbofase, rtifase, l, w, h, dtp4), name
+    name = f"thin_screwbarL_4_in_{l:02}_{w:02}_{h:02}"
+    return (rt4i, pt4, d, dwall, rbofase, rbifase, rtifase, l, w, h, dtp4), name
 
 
 @njit
 def model_function(p):
     x, y, z, par = p
-    rt4i, pt4, d, rbofase, rtifase, l, w, h, dtp4 = par
+    rt4i, pt4, d, dwall, rbofase, rbifase, rtifase, l, w, h, dtp4 = par
 
     xr = x % d - d/2
     yr = y % d - d/2
@@ -35,13 +36,10 @@ def model_function(p):
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
-    if cmb.fz_and_chamfer(rtifase, a, -tx, -ty, -tz) > 0:
+    b = bd.fz_cuboid((x-l*d/2,y-w*d/2-dwall,z-h*d/2-dwall), ((l+1)*d,w*d,h*d), rbifase)
+    if cmb.fz_and_chamfer(rtifase, a, -tx, -ty, -tz, -b) > 0:
         return False
 
     return True
-
-
-
-
 
 

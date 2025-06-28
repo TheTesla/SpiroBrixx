@@ -28,15 +28,15 @@ def model_function(p):
 
     l2 = l - 1
     w2 = w - 1
-    h2 = h
+    h2 = h + 1
 
     xr = x % d - d/2
     yr = y % d - d/2
     zr = z % d - d/2
 
-    tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i/4*3, 4, dtp4/3*2, 1.0)
-    ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i/4*3, 4, dtp4/3*2, 1.0)
-    tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i/4*3, 4, dtp4/3*2, 1.0)
+    tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
+    ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
+    tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
     b = bd.fz_cuboid((x-l2*d/2,y-w2*d/2,z-h2*d/2), (l2*d,w2*d,h2*d), rbifase)
