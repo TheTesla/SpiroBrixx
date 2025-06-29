@@ -42,6 +42,8 @@ rt1o = rt1 + rt1od
 rt1i = rt1 + rt1id
 rt1ocore = rt1i/rt1ocoreq
 
+# holes
+ri = rt4i + dtp4
 
 
 # dimensions
