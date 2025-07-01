@@ -15,7 +15,7 @@ def convert_params(params):
     rtof = float(par["rtofase"])
     rhsd = float(par["rhsd"])
     l = float(par["l"])
-    dwall = float(par["dwall"])
+    dwall = float(par["dwalltool"])
     lh = float(par["lhead"])
     nh = float(par["nhead"])
     ah = float(par["ahead"])

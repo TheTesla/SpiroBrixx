@@ -36,8 +36,10 @@ def model_function(p):
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
-    b = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2-dwall), (l*d-dwall*2,w*d-dwall*2,h*d), rbifase)
-    if cmb.fz_and_chamfer(rtifase, a, -tx, -ty, -tz, -b) > 0:
+    b = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2-dwall*2), \
+                     (l*d-dwall*2,w*d-dwall*2,h*d+dwall*2), rbifase)
+    blck = cmb.fz_and_chamfer(rbifase, a, -b)
+    if cmb.fz_and_chamfer(rtifase, blck, -tx, -ty, -tz) > 0:
         return False
 
     return True

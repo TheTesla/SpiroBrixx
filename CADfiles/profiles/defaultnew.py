@@ -48,14 +48,15 @@ ri = rt4i + dtp4
 
 # dimensions
 dgrid = 30
-dwall = 3
+dwall = 6
+dwalltool = 3.5
 
 
 # fases
 rbofase = 3
 rbifase = 2
-rtifase = 3
-rtofase = 3
+rtifase = 2.5
+rtofase = 2
 rtofasec = 1 # fase at cut of flat screw
 
 # screw head
@@ -63,13 +64,17 @@ lhead = 14
 nhead = 32
 ahead = 0.5
 rhofase = 2.5
-rh4 = 12.5
-rh1 = 12.5
+rh4 = 11.0
+rh1 = 11.0
 
 
-rhsd = rh4 + 0.1
-rsdhndl = 25
+rhsd = rh4 + 0.2
+rsdhndl = 30
 lsdhndl = 50
 nsdhndl = 48
 osdhndlfase = 9
 isdhndlfase = 6
+
+clrnc = 0.2 # clearance e. g. screwbarUU_in in screwabarUU_out
+
+

@@ -18,16 +18,14 @@ def convert_params(params):
     rbifase = float(par["rbifase"])
     rtifase = float(par["rtifase"])
     dtp4 = float(par["dtp4"])
-    clrnc = float(par["clrnc"])
-    name = f"thin_screwbarUU_4_out_{l:02}_{w:02}_{h:02}"
-    return (rt4i, pt4, d, dwall, rbofase, rbifase, \
-            rtifase, l, w, h, dtp4, clrnc), name
+    name = f"thin_screwbarU_4_in_{l:02}_{w:02}_{h:02}"
+    return (rt4i, pt4, d, dwall, rbofase, rbifase, rtifase, l, w, h, dtp4), name
 
 
 @njit
 def model_function(p):
     x, y, z, par = p
-    rt4i, pt4, d, dwall, rbofase, rbifase, rtifase, l, w, h, dtp4, clrnc = par
+    rt4i, pt4, d, dwall, rbofase, rbifase, rtifase, l, w, h, dtp4 = par
 
     xr = x % d - d/2
     yr = y % d - d/2
@@ -37,10 +35,9 @@ def model_function(p):
     ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
 
-    a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2+dwall/2+clrnc), \
-                     (l*d+(dwall+clrnc)*2,w*d+(dwall+clrnc)*2,h*d+dwall), rbofase)
+    a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
     b = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2-dwall*2), \
-                     (l*d+clrnc*2,w*d+clrnc*2,h*d+dwall*4+clrnc*2), rbifase)
+                     (l*d+dwall*2,w*d-dwall*2,h*d+dwall*2), rbifase)
     blck = cmb.fz_and_chamfer(rbifase, a, -b)
     if cmb.fz_and_chamfer(rtifase, blck, -tx, -ty, -tz) > 0:
         return False
