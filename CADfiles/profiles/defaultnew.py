@@ -19,7 +19,8 @@ rt4jntsphr = 12
 dtp4 = 1.6
 
 # flat screw
-ds4 = 10.0 # thickness
+ds4 = 9.0 # thickness
+ds1 = 9.0 # thickness
 
 rt4o = rt4 + rt4od
 rt4i = rt4 + rt4id
@@ -64,8 +65,8 @@ lhead = 14
 nhead = 32
 ahead = 0.5
 rhofase = 2.5
-rh4 = 11.0
-rh1 = 11.0
+rh4 = 12.0
+rh1 = 12.0
 
 
 rhsd = rh4 + 0.2
