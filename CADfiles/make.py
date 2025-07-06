@@ -5,8 +5,10 @@ from xyzcad import render
 from common.spirostd import output_filename
 from models import screwbarL_4, screwbarY_4, screwbarI_4, screwbarI_4X1, \
         screw_knurl_4, screwdriver, screwbarI_4X0, screwbarA_4, \
-        screw_knurl_1, screw_flat_1, nut_knurl_1, \
+        screw_knurl_1, screw_flat_1, nut_knurl_1, thin_screwbarA_4,\
         thin_screwbarI_4, thin_screwbarL_4_in, thin_screwbarL_4_out, \
+        thin_screwbarLL_4_out, thin_screwbarLL_4_in, thin_screwbarAA_4_out,\
+        thin_screwbarAA_4_in, thin_screwbarLA_4_in,\
         thin_screwbarUU_4_in, thin_screwbarUU_4_out, screwdriver, screw_flat_4,\
         thin_screwbarU_4_in, thin_screwbarU_4_out
 from profiles import defaultnew
@@ -140,9 +142,15 @@ def make_model(model, params):
 #
 
 
-parameters = {"l": 5, "w": 5, "h": 1}
+parameters = {"l": 5, "w": 3, "h": 2}
 profile["resolution"] = 0.8
-make_model(screwbarA_4, profile | parameters)
+#make_model(screwbarA_4, profile | parameters)
+#make_model(thin_screwbarA_4, profile | parameters)
+#make_model(thin_screwbarLL_4_out, profile | parameters)
+#make_model(thin_screwbarAA_4_out, profile | parameters)
+#make_model(thin_screwbarAA_4_in, profile | parameters)
+make_model(thin_screwbarLA_4_in, profile | parameters)
+#make_model(thin_screwbarLL_4_in, profile | parameters)
 
 
 
