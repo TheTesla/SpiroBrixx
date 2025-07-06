@@ -50,7 +50,7 @@ ri = rt4i + dtp4
 # dimensions
 dgrid = 30
 dwall = 6
-dwalltool = 3.5
+dwalltool = 2.5
 
 
 # fases
