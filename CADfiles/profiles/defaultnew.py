@@ -68,6 +68,11 @@ rhofase = 2.5
 rh4 = 12.0
 rh1 = 12.0
 
+# screw slot
+rs4 = 3
+ns4 = 4
+as4 = 1
+rsof = 1
 
 rhsd = rh4 + 0.2
 rsdhndl = 30
