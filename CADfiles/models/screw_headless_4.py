@@ -24,9 +24,7 @@ def convert_params(params):
     ns4 = float(par["ns4"])
     as4 = float(par["as4"])
     rsof = float(par["rsof"])
-    name = f"screw_headless_4_l{l:03.0f}mm" \
-            +f"_pt4od{pt4od*1000:04.0f}" \
-            +f"_rt4o{rt4o*1000:04.0f}mm"
+    name = "screw_headless_4"
     par_tpl = (rt4o, pt4, pt4od, pt4odr, rt4q, \
                rtof, rtofc, l, dtp4, rs4, ns4, as4, rsof)
     return par_tpl, name

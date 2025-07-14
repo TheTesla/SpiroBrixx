@@ -28,11 +28,16 @@ def block(p, s, r=1):
                  +(y - ((y if y < w/2 else w/2) if y > -w/2 else -w/2))**2\
                  +(z - ((z if z < h/2 else h/2) if z > -h/2 else -h/2))**2
 
-def output_filename(model_name, profile):
+def params2str(params):
+    rm = ["resolution", "name"]
+    return "".join([f"__{k}_{v}" for k, v in params.items() if k not in rm])
+
+def output_filename(model_name, profile, params = {}):
     res = float(profile["resolution"])
     #extension = str(profile["extension"])
     tdir = str(profile["target_dir"])
+    prms = params2str(params)
     profile_name = profile["name"] if "name" in profile \
                     else str(profile["__name__"]).split(".")[-1]
-    return f'{tdir}/{model_name}_{profile_name}_p{res*1000:04.0f}u.stl'
+    return f'{tdir}/{model_name}__{profile_name}{prms}__res_{res*1000:04.0f}u.stl'
 

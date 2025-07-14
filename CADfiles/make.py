@@ -5,7 +5,7 @@ from xyzcad import render
 from common.spirostd import output_filename
 from models import screwbarL_4, screwbarY_4, screwbarI_4, screwbarI_4X1, \
         screw_knurl_4, screwdriver, screwbarI_4X0, screwbarA_4, \
-        screw_headless_4,  \
+        screw_headless_4, thin_screwbarO_4_in, thin_screwbarA2_4,\
         screw_knurl_1, screw_flat_1, nut_knurl_1, thin_screwbarA_4,\
         thin_screwbarI_4, thin_screwbarL_4_in, thin_screwbarL_4_out, \
         thin_screwbarLL_4_out, thin_screwbarLL_4_in, thin_screwbarAA_4_out,\
@@ -101,10 +101,12 @@ def screwbar_diff(p):
     return 0
 
 
-def make_model(model, params):
-    params, name = model.convert_params(params)
-    render.renderAndSave(model.model_function, output_filename(name, profile),
-                         profile["resolution"], params)
+def make_model(model, profile, parameters):
+    params = profile | parameters
+    partpl, name = model.convert_params(params)
+    render.renderAndSave(model.model_function, output_filename(name, params,
+                                                               parameters),
+                         profile["resolution"], partpl)
 
 #parameters = {"l": 1, "w": 1, "h": 1}
 #params, name = screwbarI_4_new.convert_params(profile | parameters)
@@ -143,7 +145,7 @@ def make_model(model, params):
 #
 
 
-parameters = {"l": 3, "w": 3, "h": 3}
+#parameters = {"l": 3, "w": 3, "h": 1}
 #profile["resolution"] = 0.3
 #make_model(screwbarA_4, profile | parameters)
 #make_model(thin_screwbarA_4, profile | parameters)
@@ -160,14 +162,14 @@ parameters = {"l": 3, "w": 3, "h": 3}
 #
 #parameters = {"l": 150}
 #make_model(screwdriver, profile | parameters)
-for l in [12, 35, 65]:
+for l in [12, 35, 60, 65, 90, 95]:
     print(f"Screw length: {l} mm")
-    parameters = {"l": l, "rtofase": 1} #, "w": 3, "h": 3}
-#    make_model(screw_knurl_1, profile | parameters)
-#    make_model(screw_knurl_4, profile | parameters)
-#    make_model(screw_flat_4, profile | parameters)
-#    make_model(screw_flat_1, profile | parameters)
-    make_model(screw_headless_4, profile | parameters)
+    parameters = {"l": l, "rtofase": 1, "ns4": 6, "as4": 0.2, "rs4": 2.8 } #, "w": 3, "h": 3}
+    #make_model(screw_knurl_1, profile | parameters)
+    #make_model(screw_knurl_4, profile | parameters)
+    #make_model(screw_flat_4, profile | parameters)
+    #make_model(screw_flat_1, profile | parameters)
+    make_model(screw_headless_4, profile, parameters)
 #
 #parameters = {"l": 2, "w": 1, "h": 1}
 #make_model(screwbarI_4X0, profile | parameters)
@@ -180,11 +182,25 @@ for l in [12, 35, 65]:
 #make_model(screwbarI_4X1, profile | parameters)
 ##make_model(screwbarY_4, profile | parameters)
 ##make_model(screwbarL_4, profile | parameters)
-#parameters = {"l": 10, "w": 1, "h": 1}
-#make_model(screwbarI_4, profile | parameters)
+#parameters = {"l": 5, "w": 3, "h": 1}
+#make_model(thin_screwbarA2_4, profile | parameters)
+#parameters = {"l": 6, "w": 3, "h": 1}
+#make_model(thin_screwbarA2_4, profile | parameters)
+#for l in [2,3]:
+#    parameters = {"l": l, "w": l, "h": 1}
+#    make_model(screwbarA_4, profile | parameters)
+#    make_model(thin_screwbarA_4, profile | parameters)
+#    make_model(thin_screwbarLL_4_out, profile | parameters)
+#    make_model(thin_screwbarAA_4_out, profile | parameters)
+#    make_model(thin_screwbarAA_4_in, profile | parameters)
+#    make_model(thin_screwbarLA_4_in, profile | parameters)
+#    make_model(thin_screwbarLL_4_in, profile | parameters)
+    #make_model(screwbarI_4, profile | parameters)
+    #make_model(thin_screwbarO_4_in, profile | parameters)
+    #make_model(thin_screwbarA2_4, profile | parameters)
+    #make_model(thin_screwbarL_4_in, profile | parameters)
+    #make_model(thin_screwbarL_4_out, profile | parameters)
 ##make_model(thin_screwbarI_4, profile | parameters)
-##make_model(thin_screwbarL_4_in, profile | parameters)
-##make_model(thin_screwbarL_4_out, profile | parameters)
 ##make_model(thin_screwbarUU_4_in, profile | parameters)
 ##make_model(thin_screwbarUU_4_out, profile | parameters)
 #parameters = {"l": 8, "w": 1, "h": 1}
