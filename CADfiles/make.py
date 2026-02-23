@@ -4,19 +4,21 @@ from xyzcad import render
 
 from common.spirostd import output_filename
 from models import screwbarL_4, screwbarY_4, screwbarI_4, screwbarI_4X1, \
-        screw_knurl_4, screwdriver, screwbarI_4X0, screwbarA_4, \
+        screw_knurl_4, screwdriver, screwbarA_4, \
         screw_headless_4, thin_screwbarO_4_in, thin_screwbarA2_4,\
         screw_knurl_1, screw_flat_1, nut_knurl_1, thin_screwbarA_4,\
         thin_screwbarI_4, thin_screwbarL_4_in, thin_screwbarL_4_out, \
         thin_screwbarLL_4_out, thin_screwbarLL_4_in, thin_screwbarAA_4_out,\
-        thin_screwbarAA_4_in, thin_screwbarLA_4_in, screwbar7_4,\
+        thin_screwbarAA_4_in, thin_screwbarLA_4_in,\
         thin_screwbarUU_4_in, thin_screwbarUU_4_out, screwdriver, screw_flat_4,\
-        thin_screwbarU_4_in, thin_screwbarU_4_out, screwbarI_4X0_round,\
-        clamp_screwbarI_4
+        thin_screwbarU_4_in, thin_screwbarU_4_out,\
+        thin_screwgear_4
 from profiles import defaultnew
 
 from numba.typed import Dict
 from numba import njit
+
+import numpy as np
 
 from multiprocessing import Process
 
@@ -160,7 +162,9 @@ def make_model(model, profile, parameters):
 #parameters = {"l": 1, "w": 5, "h": 1}
 #make_model(screwbarI_4X0_round, profile, parameters)
 
-parameters = {"l": 5, "w": 1, "h": 1}
+parameters = {"z": 20, "m": 5, "alpha": 20/180*np.pi}
+make_model(thin_screwgear_4, profile, parameters)
+#parameters = {"l": 5, "w": 1, "h": 1}
 #make_model(screwbarI_4, profile, parameters)
 #parameters = {"l": 5, "w": 1, "h": 2}
 #make_model(screwbarI_4, profile, parameters)
@@ -169,7 +173,7 @@ parameters = {"l": 5, "w": 1, "h": 1}
 #parameters = {"l": 2, "w": 2, "h": 1}
 #make_model(screwbarL_4, profile, parameters)
 
-make_model(clamp_screwbarI_4, profile, parameters)
+#make_model(clamp_screwbarI_4, profile, parameters)
 #make_model(screwbar7_4, profile, parameters)
 
 #parameters = {"l": 8, "rtifase": 1.0, "rhofase": 1.0}

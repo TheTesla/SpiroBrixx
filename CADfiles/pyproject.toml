@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "spirobrixx"
+version = "0.0.0+devel"
+description = "The CAD models of the SpiroBrixx building block"
+authors = ["Stefan Helmert <stefan@entroserv.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fuzzyometry = "^0.0.9"
+xyzcad = ">=0.7.0"
+numba = ">=0.58.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.2.6"
+black = "^24.4.2"
+isort = "^5.13.2"
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
