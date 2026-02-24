@@ -103,19 +103,19 @@ profile = ["gprof2dot (>=2022.7.29)"]
 
 [[package]]
 name = "fuzzyometry"
-version = "0.0.6"
+version = "0.0.10"
 description = "The fuzzyometry library provides smooth objects, object connections and automatic chamfer generation for xyzcad."
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "fuzzyometry-0.0.6-py3-none-any.whl", hash = "sha256:9a263cc1fad96bccfebba45aff2906c3843b2a9d65f2a1b999c3ab9bb679e63e"},
-    {file = "fuzzyometry-0.0.6.tar.gz", hash = "sha256:bbfeb3f0556ed9d6a24c000097e9d07f88eb9a1e3f10ab7c9af0f3ed5ebc0b85"},
+    {file = "fuzzyometry-0.0.10-py3-none-any.whl", hash = "sha256:bad00f90ce36f4ab519c9ee3692b101417b27e3ec36da1eb1730d597f59fca5a"},
+    {file = "fuzzyometry-0.0.10.tar.gz", hash = "sha256:38d3f93461c8df65b01800534f4ca2412ea69ba9f86cc226c6d3c86c65a5b005"},
 ]
 
 [package.dependencies]
 numba = ">=0.58.0"
-xyzcad = ">=0.3.0"
+xyzcad = ">=0.7.0"
 
 [[package]]
 name = "iniconfig"
@@ -523,4 +523,4 @@ numpy-stl = ">=3.1.1,<4.0.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "56193b5a3bbc996318bd36f44d4b968762135da583d965743c5fad155dad8dc8"
+content-hash = "d67e22ff7114878cfdea4172150b497c204d54201ac7146b6b4280f255f8ce98"

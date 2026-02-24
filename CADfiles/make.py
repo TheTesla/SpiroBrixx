@@ -162,7 +162,7 @@ def make_model(model, profile, parameters):
 #parameters = {"l": 1, "w": 5, "h": 1}
 #make_model(screwbarI_4X0_round, profile, parameters)
 
-parameters = {"z": 20, "m": 5, "alpha": 20/180*np.pi}
+parameters = {"z": 20, "m": 5, "alpha": 20/180*np.pi, "rbofase": 0.1}
 make_model(thin_screwgear_4, profile, parameters)
 #parameters = {"l": 5, "w": 1, "h": 1}
 #make_model(screwbarI_4, profile, parameters)

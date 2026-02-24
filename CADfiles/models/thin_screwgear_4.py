@@ -32,14 +32,24 @@ def model_function(p):
     yr = y % d - d/2
     zr = z % d - d/2
 
-    tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
-    ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
-    tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
+    r = (x**2 + y**2)**0.5
+    #cut = (x-d)*(w-1)/(l-1)-y
+    #cutstep = 1.*round((x-d)*(w-1.)/(l-1.)/d-0.5)-1.*round(y/d-0.5)
+    cutstep = 1. * round(r + d/2 - Z*m/2)
+    #tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0) \
+    #     if cutstep < 0 else rtifase
+    #ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0) \
+    #     if cutstep < 0 else rtifase
+    tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0) \
+         if cutstep < 0 else rtifase
+    
 
-    #a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-dwall/2), (l*d,w*d,dwall), rbofase)
-    a = 30*gr.evolvente(p, (Z, m, alpha))
-    #if cmb.fz_and_chamfer(rtifase, -tx, -ty, -tz, cmb.fz_and_chamfer(rbofase, a, -z, z-dwall)) > 0:
-    if cmb.fz_and_chamfer(rbofase, a, -z, z-dwall) > 0:
+    a = gr.evolvente(p, (Z, m, alpha))
+    #if cmb.fz_and_chamfer(rtifase, -tz, cmb.fz_and_chamfer(rbofase, a, -z, z-dwall)) > 0:
+    #if cmb.fz_and_chamfer(rbofase, cmb.fz_and_chamfer(rtifase, -tz, a), -z, z-dwall) > 0:
+    if cmb.fz_and_chamfer(rbofase, a, cmb.fz_and_chamfer(rtifase, -tz, -z, z-dwall)) > 0:
+    #if cmb.fz_and_chamfer(rtifase, -tz, a, -z, z-dwall) > 0:
+    #if cmb.fz_and_chamfer(rbofase, a, -z, z-dwall) > 0:
         return False
 
     return True
