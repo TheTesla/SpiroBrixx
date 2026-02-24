@@ -163,8 +163,8 @@ def make_model(model, profile, parameters):
 #make_model(screwbarI_4X0_round, profile, parameters)
 
 #for z in [5, 7, 9, 13, 17, 20, 25,37, 55]:
-for z in [37, 55]:
-    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 1.0}
+for z in [7, 9 ,11, 25, 37, 55, 73]:
+    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
     make_model(thin_screwgear_4, profile, parameters)
 #parameters = {"l": 5, "w": 1, "h": 1}
 #make_model(screwbarI_4, profile, parameters)
