@@ -109,7 +109,7 @@ def make_model(model, profile, parameters):
     partpl, name = model.convert_params(params)
     render.renderAndSave(model.model_function, output_filename(name, params,
                                                                parameters),
-                         profile["resolution"], partpl)
+                         params["resolution"], partpl)
 
 #parameters = {"l": 1, "w": 1, "h": 1}
 #params, name = screwbarI_4_new.convert_params(profile | parameters)

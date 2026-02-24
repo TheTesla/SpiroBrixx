@@ -35,7 +35,7 @@ def model_function(p):
     r = (x**2 + y**2)**0.5
     #cut = (x-d)*(w-1)/(l-1)-y
     #cutstep = 1.*round((x-d)*(w-1.)/(l-1.)/d-0.5)-1.*round(y/d-0.5)
-    cutstep = 1. * (round(x/d)**2 + round(y/d)**2)**0.5 - Z*(m-2.5)/2/d
+    cutstep = 1. * (round(x/d)**2 + round(y/d)**2)**0.5 - (Z - 7/3)*m/2/d +0.5
     #tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0) \
     #     if cutstep < 0 else rtifase
     #ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0) \
