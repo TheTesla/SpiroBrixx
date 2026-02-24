@@ -28,14 +28,14 @@ def model_function(p):
     x, y, z, par = p
     rt4i, pt4, d, dwall, rbofase, rtifase, Z, m, alpha, dtp4 = par
 
-    xr = x % d - d/2
-    yr = y % d - d/2
-    zr = z % d - d/2
+    xr = (x + d/2) % d - d/2
+    yr = (y + d/2) % d - d/2
+    zr = (z + d/2) % d - d/2
 
     r = (x**2 + y**2)**0.5
     #cut = (x-d)*(w-1)/(l-1)-y
     #cutstep = 1.*round((x-d)*(w-1.)/(l-1.)/d-0.5)-1.*round(y/d-0.5)
-    cutstep = 1. * round(r + d/2 - Z*m/2)
+    cutstep = 1. * (round(x/d)**2 + round(y/d)**2)**0.5 - Z*(m-2.5)/2/d
     #tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0) \
     #     if cutstep < 0 else rtifase
     #ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0) \
