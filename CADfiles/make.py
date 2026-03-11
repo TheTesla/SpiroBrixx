@@ -12,7 +12,8 @@ from models import screwbarL_4, screwbarY_4, screwbarI_4, screwbarI_4X1, \
         thin_screwbarAA_4_in, thin_screwbarLA_4_in,\
         thin_screwbarUU_4_in, thin_screwbarUU_4_out, screwdriver, screw_flat_4,\
         thin_screwbarU_4_in, thin_screwbarU_4_out,\
-        thin_screwgear_4, screw_special_wsc_1
+        thin_screwgear_4, screw_special_wsc_1, nut_knurl_special_wsc_1,\
+        nut_knurl_special_wsc_4
 from profiles import defaultnew
 
 from numba.typed import Dict
@@ -178,14 +179,15 @@ def make_model(model, profile, parameters):
 #make_model(clamp_screwbarI_4, profile, parameters)
 #make_model(screwbar7_4, profile, parameters)
 
-parameters = {"l": 8, "rtifase": 1.0, "rhofase": 1.0}
-make_model(nut_knurl_1, profile, parameters)
+parameters = {"l": 10, "rtifase": 1.0, "rhofase": 1.0}
+#make_model(nut_knurl_special_wsc_1, profile, parameters)
+make_model(nut_knurl_special_wsc_4, profile, parameters)
 #
 #parameters = {"l": 150}
 #parameters = {"l": 30, "resolution": 0.3}
 parameters = {"l": 30, "rtofase": 1, "ns1": 0, "as1": 0.2, "rs1": 5.2 } #, "w": 3, "h": 3}
 #make_model(screw_headless_4, profile, parameters)
-make_model(screw_special_wsc_1, profile, parameters)
+#make_model(screw_special_wsc_1, profile, parameters)
 #make_model(screwdriver, profile | parameters)
 #for l in [12, 35, 60, 65, 90, 95]:
 #    print(f"Screw length: {l} mm")
