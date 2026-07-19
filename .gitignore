@@ -166,11 +166,19 @@ venv*
 # CAD
 *.stl
 *.gcode
+*.step
+*.STEP
+*.bgcode
+*.3mf
+
 
 # Logo
 *.png
 *.svg
 *.jpg
+
+*.zip
+*.tar.gz
 
 gen/
 
