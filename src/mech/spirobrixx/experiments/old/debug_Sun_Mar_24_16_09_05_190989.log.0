@@ -1,0 +1,8 @@
+[warning]	2024-03-24 16:09:10.237030[Thread 0x00007e769c442c80]:Failed to load to hints.cereal. File does not exists. orcaslicerbugbridge/user/hints.cereal
+[error]	2024-03-24 16:09:11.694345[Thread 0x00007e769c442c80]:calc_exclude_triangles:Unable to create exclude triangles
+[warning]	2024-03-24 16:09:12.014995[Thread 0x00007e769c442c80]:04:09:12 PM: Warning: Error running JavaScript: Unsupported result type
+[warning]	2024-03-24 16:09:12.019275[Thread 0x00007e769c442c80]:04:09:12 PM: Warning: Error running JavaScript: Unsupported result type
+[warning]	2024-03-24 16:09:12.032221[Thread 0x00007e769c442c80]:04:09:12 PM: Warning: Error running JavaScript: Unsupported result type
+[warning]	2024-03-24 16:09:12.044459[Thread 0x00007e769c442c80]:04:09:12 PM: Warning: Error running JavaScript: Unsupported result type
+[error]	2024-03-24 16:09:17.709842[Thread 0x00007e769c442c80]:calc_exclude_triangles:Unable to create exclude triangles
+[error]	2024-03-24 16:09:20.288561[Thread 0x00007e769c442c80]:calc_exclude_triangles:Unable to create exclude triangles

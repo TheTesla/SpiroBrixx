@@ -2,7 +2,7 @@
 
 resolution = 0.2
 extension = "stl"
-target_dir = "./gen/mech/spirobrixx/"
+target_dir = "."
 
 
 # four-start thread radius

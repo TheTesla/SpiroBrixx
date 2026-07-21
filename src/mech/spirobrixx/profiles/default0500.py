@@ -2,8 +2,7 @@
 
 resolution = 0.2
 extension = "stl"
-target_dir = "build"
-
+target_dir = "."
 
 # four-start thread radius
 pt4 = 1/6 # pitch

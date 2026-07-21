@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 
+from pathlib import Path
 from numba import njit
-import math
+import numpy as np
+from xyzcad import render
 
 @njit
 def screwprofile(x, m=1, n=0):
-    x = x / (2*math.pi)
+    x = x / (2*np.pi)
     return max(m*min(3*(x if x < 0.5 else 1-x), 1.2)+n, 0.3)
 
 
 @njit
 def screw4(x,y,z,rg,pt4o=1,m=1,n=0):
-    ang = -math.atan2(y,x)
-    pp = (4*(2*math.pi*pt4o*z/4+ang+1.25*math.pi))%(2*math.pi)
+    ang = -np.atan2(y,x)
+    pp = (4*(2*np.pi*pt4o*z/4+ang+1.25*np.pi))%(2*np.pi)
     r = 2*screwprofile(pp, m=m, n=n) + (x**2 + y**2)**0.5
     return r < rg
 
@@ -34,10 +36,20 @@ def params2str(params):
 
 def output_filename(model_name, profile, params = {}):
     res = float(profile["resolution"])
-    #extension = str(profile["extension"])
     tdir = str(profile["target_dir"])
+    if tdir[-1] == '/':
+        tdir = tdir[:-1]
     prms = params2str(params)
     profile_name = profile["name"] if "name" in profile \
                     else str(profile["__name__"]).split(".")[-1]
     return f'{tdir}/{model_name}__{profile_name}{prms}__res_{res*1000:04.0f}u.stl'
+
+def make_model(model, profile, parameters):
+    params = profile | parameters
+    partpl, name = model.convert_params(params)
+    fun = model.model_function
+    fn = output_filename(name, params, parameters)
+    fp = Path(fn)
+    fp.parent.mkdir(parents=True, exist_ok=True)
+    render.renderAndSave(fun, fn, params["resolution"], partpl)
 
