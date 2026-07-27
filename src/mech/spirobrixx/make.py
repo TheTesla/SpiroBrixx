@@ -9,7 +9,7 @@ from common.spirostd import make_model
 from models import \
         screwbarI_4, screwbarL_4, screwbarY_4, screwbar7_4, screwbarA_4, \
         screwbarI_4X0, screwbarI_4X0_round, screwbarI_4X1, \
-        screw_knurl_4, screwdriver, \
+        screw_knurl_4, screwdriver, clamp_screwbarI_4, spec_clamp_screwbarI_4, \
         screw_headless_4, thin_screwbarO_4_in, thin_screwbarA2_4,\
         screw_knurl_1, screw_flat_1, nut_knurl_1, thin_screwbarA_4,\
         thin_screwbarI_4, thin_screwbarL_4_in, thin_screwbarL_4_out, \
@@ -93,6 +93,9 @@ for h in [2, 3, 5]:
                 make_model(screwbarY_4, profile, parameters)
 
 
+parameters = {"l": 2, "w": 5, "h": 2}
+make_model(clamp_screwbarI_4, profile, parameters)
+make_model(spec_clamp_screwbarI_4, profile, parameters)
 
 # -------- Standard Screws 4 start --------
 for l in [35, 60, 65, 90, 95]:
@@ -153,19 +156,30 @@ for h in [2, 3, 5]:
             make_model(thin_screwbarLA_4_in, profile, parameters)
             make_model(thin_screwbarA2_4, profile, parameters)
 
+for l in [2, 3, 5]:
+    parameters = {"l": l, "w": 1, "h": 1}
+    make_model(thin_screwbarO_4_in, profile, parameters)
+
+for l in [3, 5, 7]:
+    for w in [5, 6, 9]:
+        if w >= l:
+            parameters = {"l": l, "w": w, "h": 1}
+            make_model(thin_screwbarUU_4_in, profile, parameters)
+            make_model(thin_screwbarUU_4_out, profile, parameters)
+
+for l in [3, 5, 7, 8, 9]:
+    parameters = {"l": l, "w": 1, "h": 1}
+    make_model(thin_screwbarU_4_in, profile, parameters)
+    make_model(thin_screwbarU_4_out, profile, parameters)
+
+# ------- Thin Gears 4 start ---------
+
+for z in [7, 9, 11, 25, 37, 55, 73]:
+    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
+    make_model(thin_screwgear_4, profile, parameters)
 
 
-
-
-#parameters = {"l": 1, "w": 5, "h": 1}
-#make_model(screwbarI_4X0_round, profile, parameters)
-
-#for z in [5, 7, 9, 13, 17, 20, 25,37, 55]:
-#for z in [7, 9 ,11, 25, 37, 55, 73]:
-#    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
-#    make_model(thin_screwgear_4, profile, parameters)
-
-#make_model(clamp_screwbarI_4, profile, parameters)
+# ------- special parts for reed sensor ------
 
 parameters = {"l": 10, "rtifase": 1.0, "rhofase": 1.0}
 make_model(nut_knurl_special_wsc_1, profile, parameters)
@@ -174,17 +188,6 @@ make_model(nut_knurl_special_wsc_4, profile, parameters)
 parameters = {"l": 30, "rtofase": 1, "ns1": 0, "as1": 0.2, "rs1": 5.2 } #, "w": 3, "h": 3}
 make_model(screw_special_wsc_1, profile, parameters)
 
-#for l in [2,3]:
-#    parameters = {"l": l, "w": l, "h": 1}
-    #make_model(thin_screwbarO_4_in, profile | parameters)
-##make_model(thin_screwbarUU_4_in, profile | parameters)
-##make_model(thin_screwbarUU_4_out, profile | parameters)
-#parameters = {"l": 8, "w": 1, "h": 1}
-#make_model(thin_screwbarU_4_in, profile | parameters)
-#make_model(thin_screwbarU_4_out, profile | parameters)
-#parameters = {"l": 2, "w": 1, "h": 1}
-#make_model(thin_screwbarU_4_in, profile | parameters)
-#make_model(thin_screwbarU_4_out, profile | parameters)
 
 
 
