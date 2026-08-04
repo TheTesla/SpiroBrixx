@@ -35,7 +35,7 @@ def model_function(p):
     xd = np.floor(x/d)*d + d/2
     yd = np.floor(y/d)*d + d/2
 
-    if (xd - xc)**2 + (yd - yc)**2 < (rc-rt4i+dtp4+d/2**0.5)**2:
+    if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
         xr = -d/2
         yr = -d/2
         zr = -d/2
