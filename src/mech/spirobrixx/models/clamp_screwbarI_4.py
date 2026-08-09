@@ -34,20 +34,22 @@ def model_function(p):
 
     xd = np.floor(x/d)*d + d/2
     yd = np.floor(y/d)*d + d/2
+    xd2 = np.floor(3*x/d)*d/3 + d/6
+    yd2 = np.floor(3*y/d)*d/3 + d/6
 
-    if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
-        xr = -d/2
-        yr = -d/2
-        zr = -d/2
-    else:
-        xr = x % d - d/2
-        yr = y % d - d/2
-        zr = z % d - d/2
-
+    xr = x % d - d/2
+    yr = y % d - d/2
+    zr = z % d - d/2
 
     tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
     ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
+    if (xd2 - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
+        tx = 1000
+    if (xd - xc)**2 + (yd2 - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
+        ty = 1000
+    if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
+        tz = 1000
 
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
