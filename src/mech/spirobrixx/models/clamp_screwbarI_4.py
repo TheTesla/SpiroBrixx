@@ -34,8 +34,8 @@ def model_function(p):
 
     xd = np.floor(x/d)*d + d/2
     yd = np.floor(y/d)*d + d/2
-    xd2 = np.floor(3*x/d)*d/3 + d/6
-    yd2 = np.floor(3*y/d)*d/3 + d/6
+    xd2 = np.floor(5*x/d)*d/5 + d/10
+    yd2 = np.floor(5*y/d)*d/5 + d/10
 
     xr = x % d - d/2
     yr = y % d - d/2
@@ -44,16 +44,40 @@ def model_function(p):
     tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
     ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
-    if (xd2 - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
+    if cmb.fz_and_chamfer(rc, yd - yc - rt4i-rc, xd - xc - rc - d/5*4 ) < 0:
+    #if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i)**2: #(rc+rt4i+dtp4/2+rtifase)**2:
         tx = 1000
-    if (xd - xc)**2 + (yd2 - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
+    #if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i)**2: #(rc+rt4i+dtp4/2+rtifase)**2:
+    if cmb.fz_and_chamfer(rc, xd - xc - rt4i-rc, yd - yc - rc - d/5*4 ) < 0:
         ty = 1000
     if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
         tz = 1000
 
+    #rcoa = rc + 1 #rt4i+dtp4/2+rtifase
+    #xcdla = np.floor(5*(xc-rcoa)/d)*d/5 - d/10
+    #xcdua = np.floor(5*(xc+rcoa)/d+0.99)*d/5 + d/10
+    #xcda = (xcdua + xcdla)/2
+    #lcda = xcdua - xcdla
+    #ycdla = np.floor(5*(yc-rcoa)/d)*d/5 - d/10
+    #ycdua = np.floor(5*(yc+rcoa)/d+0.99)*d/5 + d/10
+    #ycda = (ycdua + ycdla)/2
+    #wcda = ycdua - ycdla
+    #rcob = rc + 1 #rt4i+dtp4/2+rtifase
+    #xcdlb = np.floor(5*(xc-rcob)/d)*d/5 - d/10
+    #xcdub = np.floor(5*(xc+rcob)/d+0.99)*d/5 + d/10
+    #xcdb = (xcdub + xcdlb)/2
+    #lcdb = xcdub - xcdlb
+    #ycdlb = np.floor((yc-rcob)/d)*d - d/2
+    #ycdub = np.floor((yc+rcob)/d+0.99)*d + d/2
+    #ycdb = (ycdub + ycdlb)/2
+    #wcdb = ycdub - ycdlb
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
     b = bd.fz_circle((x-xc, y-yc), rc) #+ rbofase
+    #cx = bd.fz_cuboid((x-xcda,y-ycdb,z-h*d/2), (lcda, wcdb, h*d), rbofase)
+    #cy = bd.fz_cuboid((x-xcdb,y-ycda,z-h*d/2), (lcdb, wcda, h*d), rbofase)
+    #txc = cmb.fz_and_chamfer(rtifase, tx, -cx)
+    #tyc = cmb.fz_and_chamfer(rtifase, ty, -cy)
     if cmb.fz_and_chamfer(rtifase, a, -b, -tx, -ty, -tz) > 0:
         return False
 
