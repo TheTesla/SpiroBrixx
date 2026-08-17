@@ -93,8 +93,8 @@ profile["resolution"] = 0.3
 #                make_model(screwbarY_4, profile, parameters)
 #
 #
-for rc in range(12):
-    parameters = {"l": 1, "w": 1, "h": 2, "xc": 15, "yc": 0, "rc": rc}
+for rc in range(20):
+    parameters = {"l": 1, "w": 1, "h": 2, "xc": 10, "yc": 0, "rc": rc}
     make_model(clamp_screwbarI_4, profile, parameters)
 parameters = {"l": 5, "w": 2, "h": 1, "xc": 60, "yc": 0, "rc": 20}
 make_model(clamp_screwbarI_4, profile, parameters)

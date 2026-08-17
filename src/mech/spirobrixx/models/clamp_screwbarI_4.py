@@ -29,8 +29,8 @@ def model_function(p):
     x, y, z, par = p
     rt4i, pt4, d, rbofase, rtifase, l, w, h, dtp4, rc, xc, yc = par
 
-    #pc = 60
-    #rc = 3
+    rt = rt4i + 2 * dtp4
+    rco = rc + d/10
 
     xd = np.floor(x/d)*d + d/2
     yd = np.floor(y/d)*d + d/2
@@ -44,19 +44,17 @@ def model_function(p):
     tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
     ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
-    if cmb.fz_and_chamfer(rc, yd - (yc + rt4i + rc), xd - xc - rc - d/5*4) < 0:
-        if xr < 0:
-            tx = 1000
-    if cmb.fz_and_chamfer(rc, yd - (yc + rt4i + rc), -xd + xc - rc - d/5*4) < 0:
-        if xr > 0:
-            tx = 1000
-    if cmb.fz_and_chamfer(rc, xd - (xc + rt4i + rc), yd - (yc + rc + d/5*4)) < 0:
-        if yr < 0:
-            ty = 1000
-    if cmb.fz_and_chamfer(rc, xd - (xc + rt4i + rc), yd + (yc + rc + d/5*4)) < 0:
-        if yr > 0:
-            ty = 1000
-    if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
+    txs = rtifase
+    tys = rtifase
+    if cmb.fz_and_chamfer(rco, abs(yd - yc) - rt - rco, xd - xc - rco + d/10*3) < 0:
+        txs = -xr + d/10*3 #- rtifase
+    if cmb.fz_and_chamfer(rco, abs(yd - yc) - rt - rco, -xd + xc - rco + d/10*3) < 0:
+        txs = xr + d/10*3 #- rtifase
+    if cmb.fz_and_chamfer(rco, abs(xd - xc) - rt - rco, yd - yc - rco + d/10*3) < 0:
+        tys = -yr + d/10*3 #- rtifase
+    if cmb.fz_and_chamfer(rco, abs(xd - xc) - rt - rco, -yd + yc - rco + d/10*3) < 0:
+        tys = yr + d/10*3 #- rtifase
+    if (xd - xc)**2 + (yd - yc)**2 < (rco+rt)**2:
         tz = 1000
 
     #rcoa = rc + 1 #rt4i+dtp4/2+rtifase
@@ -80,11 +78,13 @@ def model_function(p):
 
     a = bd.fz_cuboid((x-l*d/2,y-w*d/2,z-h*d/2), (l*d,w*d,h*d), rbofase)
     b = bd.fz_circle((x-xc, y-yc), rc) #+ rbofase
+    bo = bd.fz_circle((x-xc, y-yc), rco) #+ rbofase
     #cx = bd.fz_cuboid((x-xcda,y-ycdb,z-h*d/2), (lcda, wcdb, h*d), rbofase)
     #cy = bd.fz_cuboid((x-xcdb,y-ycda,z-h*d/2), (lcdb, wcda, h*d), rbofase)
-    #txc = cmb.fz_and_chamfer(rtifase, tx, -cx)
-    #tyc = cmb.fz_and_chamfer(rtifase, ty, -cy)
-    if cmb.fz_and_chamfer(rtifase, a, -b, -tx, -ty, -tz) > 0:
+    txc = cmb.fz_and_chamfer(rtifase, tx, -bo, -txs)
+    tyc = cmb.fz_and_chamfer(rtifase, ty, -bo, -tys)
+    tzc = cmb.fz_and_chamfer(rtifase, tz, -bo)
+    if cmb.fz_and_chamfer(rtifase, a, -b, -txc, -tyc, -tzc) > 0:
         return False
 
     return True
