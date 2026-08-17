@@ -44,12 +44,18 @@ def model_function(p):
     tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
     ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
-    if cmb.fz_and_chamfer(rc, yd - yc - rt4i-rc, xd - xc - rc - d/5*4 ) < 0:
-    #if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i)**2: #(rc+rt4i+dtp4/2+rtifase)**2:
-        tx = 1000
-    #if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i)**2: #(rc+rt4i+dtp4/2+rtifase)**2:
-    if cmb.fz_and_chamfer(rc, xd - xc - rt4i-rc, yd - yc - rc - d/5*4 ) < 0:
-        ty = 1000
+    if cmb.fz_and_chamfer(rc, yd - (yc + rt4i + rc), xd - xc - rc - d/5*4) < 0:
+        if xr < 0:
+            tx = 1000
+    if cmb.fz_and_chamfer(rc, yd - (yc + rt4i + rc), -xd + xc - rc - d/5*4) < 0:
+        if xr > 0:
+            tx = 1000
+    if cmb.fz_and_chamfer(rc, xd - (xc + rt4i + rc), yd - (yc + rc + d/5*4)) < 0:
+        if yr < 0:
+            ty = 1000
+    if cmb.fz_and_chamfer(rc, xd - (xc + rt4i + rc), yd + (yc + rc + d/5*4)) < 0:
+        if yr > 0:
+            ty = 1000
     if (xd - xc)**2 + (yd - yc)**2 < (rc+rt4i+dtp4/2+rtifase)**2:
         tz = 1000
 

@@ -93,7 +93,7 @@ profile["resolution"] = 0.3
 #                make_model(screwbarY_4, profile, parameters)
 #
 #
-for rc in range(9):
+for rc in range(12):
     parameters = {"l": 1, "w": 1, "h": 2, "xc": 15, "yc": 0, "rc": rc}
     make_model(clamp_screwbarI_4, profile, parameters)
 parameters = {"l": 5, "w": 2, "h": 1, "xc": 60, "yc": 0, "rc": 20}
@@ -149,48 +149,48 @@ make_model(clamp_screwbarI_4, profile, parameters)
 #            make_model(thin_screwbarL_4_out, profile, parameters)
 #
 # -------- Other Thin Screwbar 4 start --------
-for h in [2, 3, 5]:
-    for l in [2, 3, 5]:
-        for w in [2, 3, 5]:
-            parameters = {"l": l, "w": w, "h": h}
-            make_model(thin_screwbarLL_4_out, profile, parameters)
-            make_model(thin_screwbarLL_4_in, profile, parameters)
-            make_model(thin_screwbarAA_4_out, profile, parameters)
-            make_model(thin_screwbarAA_4_in, profile, parameters)
-            make_model(thin_screwbarLA_4_in, profile, parameters)
-            #make_model(thin_screwbarA2_4, profile, parameters)
-
-for l in [2, 3, 5]:
-    parameters = {"l": l, "w": 1, "h": 1}
-    make_model(thin_screwbarO_4_in, profile, parameters)
-
-for l in [3, 5, 7]:
-    for w in [5, 6, 9]:
-        if w >= l:
-            parameters = {"l": l, "w": w, "h": 1}
-            make_model(thin_screwbarUU_4_in, profile, parameters)
-            make_model(thin_screwbarUU_4_out, profile, parameters)
-
-for l in [3, 5, 7, 8, 9]:
-    parameters = {"l": l, "w": 1, "h": 1}
-    make_model(thin_screwbarU_4_in, profile, parameters)
-    make_model(thin_screwbarU_4_out, profile, parameters)
-
-# ------- Thin Gears 4 start ---------
-
-for z in [7, 9, 11, 25, 37, 55, 73]:
-    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
-    make_model(thin_screwgear_4, profile, parameters)
-
-
-# ------- special parts for reed sensor ------
-
-parameters = {"l": 10, "rtifase": 1.0, "rhofase": 1.0}
-make_model(nut_knurl_special_wsc_1, profile, parameters)
-make_model(nut_knurl_special_wsc_4, profile, parameters)
-
-parameters = {"l": 30, "rtofase": 1, "ns1": 0, "as1": 0.2, "rs1": 5.2 } #, "w": 3, "h": 3}
-make_model(screw_special_wsc_1, profile, parameters)
+#for h in [2, 3, 5]:
+#    for l in [2, 3, 5]:
+#        for w in [2, 3, 5]:
+#            parameters = {"l": l, "w": w, "h": h}
+#            make_model(thin_screwbarLL_4_out, profile, parameters)
+#            make_model(thin_screwbarLL_4_in, profile, parameters)
+#            make_model(thin_screwbarAA_4_out, profile, parameters)
+#            make_model(thin_screwbarAA_4_in, profile, parameters)
+#            make_model(thin_screwbarLA_4_in, profile, parameters)
+#            #make_model(thin_screwbarA2_4, profile, parameters)
+#
+#for l in [2, 3, 5]:
+#    parameters = {"l": l, "w": 1, "h": 1}
+#    make_model(thin_screwbarO_4_in, profile, parameters)
+#
+#for l in [3, 5, 7]:
+#    for w in [5, 6, 9]:
+#        if w >= l:
+#            parameters = {"l": l, "w": w, "h": 1}
+#            make_model(thin_screwbarUU_4_in, profile, parameters)
+#            make_model(thin_screwbarUU_4_out, profile, parameters)
+#
+#for l in [3, 5, 7, 8, 9]:
+#    parameters = {"l": l, "w": 1, "h": 1}
+#    make_model(thin_screwbarU_4_in, profile, parameters)
+#    make_model(thin_screwbarU_4_out, profile, parameters)
+#
+## ------- Thin Gears 4 start ---------
+#
+#for z in [7, 9, 11, 25, 37, 55, 73]:
+#    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
+#    make_model(thin_screwgear_4, profile, parameters)
+#
+#
+## ------- special parts for reed sensor ------
+#
+#parameters = {"l": 10, "rtifase": 1.0, "rhofase": 1.0}
+#make_model(nut_knurl_special_wsc_1, profile, parameters)
+#make_model(nut_knurl_special_wsc_4, profile, parameters)
+#
+#parameters = {"l": 30, "rtofase": 1, "ns1": 0, "as1": 0.2, "rs1": 5.2 } #, "w": 3, "h": 3}
+#make_model(screw_special_wsc_1, profile, parameters)
 
 
 
