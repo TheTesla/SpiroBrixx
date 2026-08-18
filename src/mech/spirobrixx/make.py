@@ -93,11 +93,11 @@ profile["resolution"] = 0.3
 #                make_model(screwbarY_4, profile, parameters)
 #
 #
-for rc in range(30):
-    parameters = {"l": 1, "w": 1, "h": 2, "xc": 10, "yc": 0, "rc": rc}
-    make_model(clamp_screwbarI_4, profile, parameters)
-parameters = {"l": 5, "w": 2, "h": 1, "xc": 60, "yc": 0, "rc": 20}
-make_model(clamp_screwbarI_4, profile, parameters)
+#for rc in range(30):
+#    parameters = {"l": 1, "w": 1, "h": 2, "xc": 10, "yc": 0, "rc": rc}
+#    make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 5, "w": 2, "h": 1, "xc": 60, "yc": 0, "rc": 20}
+#make_model(clamp_screwbarI_4, profile, parameters)
 
 #make_model(spec_clamp_screwbarI_4, profile, parameters)
 #
@@ -120,6 +120,10 @@ make_model(clamp_screwbarI_4, profile, parameters)
 #    make_model(screw_headless_4, profile, parameters)
 #
 ## -------- Screws 1 start -----------
+
+parameters = {"l": 60, "lc": 90, "ls": 30, "rtofase": 1, "ns4": 6, "as4": 0.2, "rs4": 2.8 } #, "w": 3, "h": 3}
+make_model(screw_knurl_1, profile, parameters)
+
 #for l in [95]:
 #    print(f"Screw length: {l} mm")
 #    parameters = {"l": l, "rtofase": 1, "ns4": 6, "as4": 0.2, "rs4": 2.8 } #, "w": 3, "h": 3}

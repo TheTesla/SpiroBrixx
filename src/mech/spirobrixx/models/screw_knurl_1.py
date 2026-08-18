@@ -24,11 +24,25 @@ def convert_params(params):
     lh = float(par["lhead"])
     nh = float(par["nhead"])
     ah = float(par["ahead"])
+    rc = rt1o - dtp1 - rtof
+    rs = rt1o + dtp1 + rtof
+    ls = 0
+    lc = 0
+    if "ls1" in par:
+        ls = float(par["ls1"])
+    if "rs1" in par:
+        rs = float(par["rs1"])
+    if "lc1" in par:
+        lc = float(par["lc1"])
+    else:
+        rc = -rtof - rtif
+    if "rc1" in par:
+        rc = float(par["rc1"])
     name = f"screw_knurl_1_l{l:03.0f}mm" \
             +f"_pt1od{pt1od*1000:04.0f}" \
             +f"_rt1o{rt1o*1000:04.0f}mm"
     par_tpl = (rt1o, pt1, pt1od, pt1odr, rhof,\
-               rtof, rtif, rh1, l, dtp1, lh, nh, ah)
+               rtof, rtif, rh1, l, dtp1, lh, nh, ah, ls, rs, lc, rc)
     return par_tpl, name
 
 
@@ -37,16 +51,19 @@ def model_function(p):
     x, y, z, par = p
 
     rt1o, pt1, pt1od, pt1odr, rhof, \
-    rtof, rtif, rh1, l, dtp1, lh, nh, ah = par
+    rtof, rtif, rh1, l, dtp1, lh, nh, ah, ls, rs, lc, rc = par
 
     lt = l + lh
     pt1o = pt1 * (1 + pt1odr + pt1od/l)
 
+    cc = cmb.fz_or_chamfer(rtof, bd.fz_circle((x,y), rc), z - lt)
+    cs = cmb.fz_and_chamfer(rtif, bd.fz_circle((x,y), rs), -z, z -
+                                               (ls + lh))
     tz = thrd.fz_thread((x,y,pt1o*z), rt1o, 1, dtp1, 1.0)
     th = thrd.fz_thread((x,y,0.1), rh1, nh, ah, rhof)
-    thread = cmb.fz_and_chamfer(rtof, tz, z-lt, -z+lh)
+    thread = cmb.fz_and_chamfer(rtof, tz, z-max(lc,l)-lh, -z+lh, cc)
     head = cmb.fz_and_chamfer(rhof, th, z-lh, -z)
-    if cmb.fz_or_chamfer(rtif, thread, head) > 0:
+    if cmb.fz_or_chamfer(rtif, thread, head, cs) > 0:
         return False
     return True
 
