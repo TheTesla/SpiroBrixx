@@ -44,16 +44,18 @@ def model_function(p):
     tx = thrd.fz_thread((yr,zr,pt4*x-0.25), rt4i, 4, dtp4, 1.0)
     ty = thrd.fz_thread((zr,xr,pt4*y-0.25), rt4i, 4, dtp4, 1.0)
     tz = thrd.fz_thread((xr,yr,pt4*z-0.25), rt4i, 4, dtp4, 1.0)
-    txs = rtifase
-    tys = rtifase
+    txsl = rtifase
+    txsu = rtifase
+    tysl = rtifase
+    tysu = rtifase
     if cmb.fz_and_chamfer(rco, abs(yd - yc) - rt - rco, xd - xc - rco + d/10*3) < 0:
-        txs = -xr + d/10*3 #- rtifase
+        txsu = -xr
     if cmb.fz_and_chamfer(rco, abs(yd - yc) - rt - rco, -xd + xc - rco + d/10*3) < 0:
-        txs = xr + d/10*3 #- rtifase
+        txsl = xr
     if cmb.fz_and_chamfer(rco, abs(xd - xc) - rt - rco, yd - yc - rco + d/10*3) < 0:
-        tys = -yr + d/10*3 #- rtifase
+        tysu = -yr
     if cmb.fz_and_chamfer(rco, abs(xd - xc) - rt - rco, -yd + yc - rco + d/10*3) < 0:
-        tys = yr + d/10*3 #- rtifase
+        tysl = yr
     if (xd - xc)**2 + (yd - yc)**2 < (rco+rt)**2:
         tz = 1000
 
@@ -81,8 +83,8 @@ def model_function(p):
     bo = bd.fz_circle((x-xc, y-yc), rco) #+ rbofase
     #cx = bd.fz_cuboid((x-xcda,y-ycdb,z-h*d/2), (lcda, wcdb, h*d), rbofase)
     #cy = bd.fz_cuboid((x-xcdb,y-ycda,z-h*d/2), (lcdb, wcda, h*d), rbofase)
-    txc = cmb.fz_and_chamfer(rtifase, tx, -bo, -txs)
-    tyc = cmb.fz_and_chamfer(rtifase, ty, -bo, -tys)
+    txc = cmb.fz_and_chamfer(rtifase, tx, -bo, -txsl, -txsu)
+    tyc = cmb.fz_and_chamfer(rtifase, ty, -bo, -tysl, -tysu)
     tzc = cmb.fz_and_chamfer(rtifase, tz, -bo)
     if cmb.fz_and_chamfer(rtifase, a, -b, -txc, -tyc, -tzc) > 0:
         return False
