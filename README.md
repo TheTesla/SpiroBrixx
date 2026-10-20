@@ -42,6 +42,7 @@ Recommended print parameters:
 * Inner perimeter: 0.8 mm
 * Infill: 0.8 mm
 * Standard values for all other parameters
+* Short hot water annealing after printing: submerge the part in hot water (just below boiling) for a few minutes, then let it cool down slowly. This relieves internal print stresses.
 
 ## License
 

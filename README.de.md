@@ -42,6 +42,7 @@ Empfohlene Druckparameter:
 * Innenkontur: 0,8 mm
 * Füllung: 0,8 mm
 * Standardwerte für alle übrigen Parameter
+* Kurzes Heißwasser-Anlassen (Annealing) nach dem Drucken: Bauteil für wenige Minuten in heißes Wasser (kurz unter dem Siedepunkt) tauchen, dann langsam abkühlen lassen. Baut innere Druckspannungen ab.
 
 ## Lizenz
 
