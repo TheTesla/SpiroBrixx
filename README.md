@@ -1,5 +1,7 @@
 # SpiroBrixx Construction System
 
+*Deutsche Version: [README.de.md](README.de.md)*
+
 [![REUSE Compliance](https://github.com/TheTesla/SpiroBrixx/actions/workflows/reuse.yml/badge.svg)](https://github.com/TheTesla/SpiroBrixx/actions/workflows/reuse.yml)
 [![License: CERN-OHL-S-2.0](https://img.shields.io/badge/License-CERN--OHL--S--2.0-blue.svg)](LICENSE)
 
