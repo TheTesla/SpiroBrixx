@@ -176,6 +176,8 @@ venv*
 *.png
 *.svg
 *.jpg
+!doc/media/SpiroBrixxLogo/SpiroBrixxLogo.png
+!doc/media/photos_no_bg/IMG_20240107_144104.png
 
 *.zip
 *.tar.gz

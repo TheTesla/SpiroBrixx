@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2023-2026 Stefan Helmert <stefan@entroserv.de>
+#
+# SPDX-License-Identifier: CERN-OHL-S-2.0
+
+name: REUSE Compliance
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  reuse-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install reuse
+      - run: reuse lint
