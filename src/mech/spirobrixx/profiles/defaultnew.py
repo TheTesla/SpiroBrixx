@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023-2026 Stefan Helmert <stefan@entroserv.de>
+#
+# SPDX-License-Identifier: CERN-OHL-S-2.0
+
 
 
 resolution = 0.2
@@ -30,7 +34,7 @@ rt4icore = rt4i/rt4icoreq
 
 # one-start thread radius
 pt1 = pt4
-pt1od = 1.0
+pt1od = 0.0
 pt1odr = 0.000
 
 rt1 = rt4

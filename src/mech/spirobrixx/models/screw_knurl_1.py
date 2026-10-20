@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2023-2026 Stefan Helmert <stefan@entroserv.de>
+#
+# SPDX-License-Identifier: CERN-OHL-S-2.0
+
 
 from numba import njit
 from fuzzyometry import bodies as bd
@@ -57,7 +61,7 @@ def model_function(p):
     pt1o = pt1 * (1 + pt1odr + pt1od/l)
 
     cc = cmb.fz_or_chamfer(rtof, bd.fz_circle((x,y), rc), z - lt)
-    cs = cmb.fz_and_chamfer(rtif, bd.fz_circle((x,y), rs), -z, z -
+    cs = cmb.fz_and_chamfer(rtif, bd.fz_circle((x,y), rs), lh - z, z -
                                                (ls + lh))
     tz = thrd.fz_thread((x,y,pt1o*z), rt1o, 1, dtp1, 1.0)
     th = thrd.fz_thread((x,y,0.1), rh1, nh, ah, rhof)

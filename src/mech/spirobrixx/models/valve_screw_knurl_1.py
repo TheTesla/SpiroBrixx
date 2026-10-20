@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2023-2026 Stefan Helmert <stefan@entroserv.de>
+#
+# SPDX-License-Identifier: CERN-OHL-S-2.0
+
+
+from numba import njit
+from fuzzyometry import bodies as bd
+from fuzzyometry import threads as thrd
+from fuzzyometry import combinations as cmb
+import math
+import numpy as np
+import sys
+
+
+def convert_params(params):
+    par = params
+    rt1o = float(par["rt1o"])
+    rt1i = float(par["rt1i"])
+    pt1 = float(par["pt1"])
+    pt1od = float(par["pt1od"])
+    pt1odr = float(par["pt1odr"])
+    rhof = float(par["rhofase"])
+    rtif = float(par["rtifase"])
+    rtof = float(par["rtofase"])
+    rh1 = float(par["rh1"])
+    l = float(par["l"])
+    dtp1 = float(par["dtp1"])
+    lh = float(par["lhead"])
+    nh = float(par["nhead"])
+    ah = float(par["ahead"])
+    rc = rt1o - dtp1 - rtof
+    rs = rt1o + dtp1 + rtof
+    ls = 0
+    lc = 0
+    if "ls1" in par:
+        ls = float(par["ls1"])
+    if "rs1" in par:
+        rs = float(par["rs1"])
+    if "lc1" in par:
+        lc = float(par["lc1"])
+    else:
+        rc = -rtof - rtif
+    if "rc1" in par:
+        rc = float(par["rc1"])
+    name = "valve_screw_knurl_1"
+    par_tpl = (rt1o, pt1, pt1od, pt1odr, rhof,\
+               rtof, rtif, rh1, l, dtp1, lh, nh, ah, ls, rs, lc, rc, rt1i)
+    return par_tpl, name
+
+
+@njit
+def model_function(p):
+    x, y, z, par = p
+
+    rt1o, pt1, pt1od, pt1odr, rhof, \
+    rtof, rtif, rh1, l, dtp1, lh, nh, ah, ls, rs, lc, rc, rt1i = par
+
+    lt = l + lh
+    pt1o = pt1 * (1 + pt1odr + pt1od/l)
+
+    cc = cmb.fz_or_chamfer(rtof, bd.fz_circle((x,y), rc), z - lt)
+    cs = cmb.fz_and_chamfer(rtif, bd.fz_circle((x,y), rs), lh-z, z -
+                                               (ls + lh))
+    tzo = thrd.fz_thread((x,y,pt1o*z), rt1o, 1, dtp1, 1.0)
+    tzi = thrd.fz_thread((x,y,pt1*z), rt1i, 1, dtp1, 1.0)
+    th = thrd.fz_thread((x,y,0.1), rh1, nh, ah, rhof)
+    thread = cmb.fz_and_chamfer(rtof, tzo, z-max(lc,l)-lh, -z+lh, cc)
+    head = cmb.fz_and_chamfer(rhof, th, z-lh, -z)
+    if cmb.fz_and_chamfer(rtif, cmb.fz_or_chamfer(rtif, thread, head, cs),
+                          -tzi) > 0:
+        return False
+    return True
+
