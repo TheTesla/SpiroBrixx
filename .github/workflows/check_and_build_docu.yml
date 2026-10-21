@@ -1,0 +1,128 @@
+# SPDX-FileCopyrightText: 2022-2026 Robin Vobruba <hoijui.quaero@gmail.com>
+#
+# SPDX-License-Identifier: Unlicense
+
+name: Check OSH Openness & Generate Documentation
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  # Allows us to run this workflow manually
+  # from the Actions tab on the GitHub web UI
+  workflow_dispatch:
+  release:
+    types: [ published ]
+
+# Sets permissions of the GITHUB_TOKEN
+# to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Compile
+    runs-on: ubuntu-latest
+    container: hoijui/movedo:latest
+    steps:
+      - name: Check out the sources
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - name: "Extract repos name"
+        run: echo "REPO_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+
+      - name: "Fix git repo rights"
+        run: git config --global --add safe.directory "/__w/$REPO_NAME/$REPO_NAME"
+
+      - name: OSH-Tool - Fix checkout ownership
+        run: |
+          # HACK Workaround for bug:
+          # https://github.com/actions/runner/issues/2033
+          mkdir -p /home/runner/work/_temp/_github_home
+          printf "[safe]\n\tdirectory = $GITHUB_WORKSPACE" \
+            > /home/runner/work/_temp/_github_home/.gitconfig
+          # this is the same as above, but rather does not work on CI
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          # alternative fix for same issue
+          # (as the above does not always work)
+          chown -R $(id -u):$(id -g) $PWD
+
+      - name: OSH-Tool - Check/Linting
+        id: osh-check
+        uses: hoijui/osh-tool@master
+
+      - name: "tree - before build"
+        run: |
+          pwd
+          tree
+
+      - name: "DEBUGing - Check Xe*Tex availability"
+        run: |
+          which xetex || true
+          which xelatex || true
+          which python || true
+          python --version || true
+          ls -la /usr/bin/xetex || true
+          ls -la /usr/bin/xelatex || true
+          echo "PATH=$PATH"
+
+      - name: "Build with MoVeDo"
+        run: |
+          # HACK Latest version of pandoc should already be installed,
+          #      but ... sometimes isn't.
+          #mvd print_pandoc_version
+          #mvd install_pandoc
+          #mvd print_pandoc_version
+          mvd install_pdsite
+          #tlmgr install latex latex-bin
+          #tlmgr-sys --all
+          #fmtutil-sys --all
+          #echo "XXX --reinstall texlive-xetex"
+          #apt-get update
+          #apt-get install --reinstall texlive-xetex
+          #echo "XXX show installed fmt's"
+          #find /var/lib/texmf/web2c
+          export PATH="$PATH:$HOME/.pdsite/bin"
+          export MVD_SINGLE_FILE=false
+          #export MVD_INDIVIDUAL=1
+          mvd build --mvd-individual --pdf-engine=xelatex
+          # NOTE This is a HACK/FIX because ...
+          # on some versions of the docker "magic"-universe,
+          # this symlink is "fantastically" ... not present.
+          #ln -s /usr/bin/xetex /usr/bin/xelatex || true
+          #mvd make_pdf --mvd-individual --pdf-engine=xelatex
+          #mvd make_pdf --mvd-individual --pdf-engine=/usr/bin/xetex
+          mvd create_index build/
+
+      - name: Combine outputs
+        run: |
+          mv public osh-check
+          mkdir public
+          mv osh-check public/
+          mv build public/doc
+          echo '<html><body><a href="./doc/">Documentation</a><br><a href="./osh-check/">OSH-Check</a>' > public/index.html
+
+      - name: Upload artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "public/"
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
