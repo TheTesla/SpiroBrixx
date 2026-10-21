@@ -1,3 +1,5 @@
+# SpiroBrixx - Logo
+
 ## Dependencies
 
 Install the font:
@@ -5,4 +7,3 @@ Install the font:
 ```bash
 sudo apt install fonts-osifont
 ```
-
