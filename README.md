@@ -1,5 +1,11 @@
 # SpiroBrixx Construction System
 
+<!--
+SPDX-FileCopyrightText: 2023-2026 Stefan Helmert <stefan.helmert@t-online.de>
+
+SPDX-License-Identifier: CERN-OHL-S-2.0
+-->
+
 *Deutsche Version: [README.de.md](README.de.md)*
 
 [![REUSE Compliance](

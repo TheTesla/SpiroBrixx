@@ -1,5 +1,11 @@
 # SpiroBrixx-Baukastensystem
 
+<!--
+SPDX-FileCopyrightText: 2023-2026 Stefan Helmert <stefan.helmert@t-online.de>
+
+SPDX-License-Identifier: CERN-OHL-S-2.0
+-->
+
 [![REUSE Compliance](
   https://github.com/TheTesla/SpiroBrixx/actions/workflows/reuse.yml/badge.svg)](
   https://github.com/TheTesla/SpiroBrixx/actions/workflows/reuse.yml)
