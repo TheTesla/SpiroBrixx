@@ -39,7 +39,7 @@ profile["target_dir"] = output_dir / profile["target_dir"]
 
 print(f"Output Path: {profile['target_dir']}")
 
-profile["resolution"] = 0.3
+profile["resolution"] = 1 #0.3
 
 
 
@@ -50,7 +50,7 @@ profile["resolution"] = 0.3
 #
 ## -------- Standard Bars 4 start --------
 #for w in [1, 2, 3, 5]:
-#    for l in range(1,12):
+#    for l in range(1,14):
 #        if w <= l:
 #            parameters = {"l": l, "w": w, "h": 1}
 #            make_model(screwbarI_4, profile, parameters)
@@ -77,12 +77,12 @@ profile["resolution"] = 0.3
 #            make_model(screwbarA_4, profile, parameters)
 #
 # -------- L Bars 4 start --------
-for w in [2, 3, 5]:
-    for l in [2, 3, 5]:
-        if w <= l:
-            parameters = {"l": l, "w": w, "h": 1}
-            make_model(screwbarL_4, profile, parameters)
-
+#for w in [2, 3, 5]:
+#    for l in [2, 3, 5]:
+#        if w <= l:
+#            parameters = {"l": l, "w": w, "h": 1}
+#            make_model(screwbarL_4, profile, parameters)
+#
 #for l in [2]:
 #    for w in [2]:
 #        for h in [2, 3, 5, 8, 10, 12]:
@@ -102,7 +102,15 @@ for w in [2, 3, 5]:
 #for rc in range(30):
 #    parameters = {"l": 1, "w": 1, "h": 2, "xc": 10, "yc": 0, "rc": rc}
 #    make_model(clamp_screwbarI_4, profile, parameters)
-#parameters = {"l": 5, "w": 2, "h": 1, "xc": 60, "yc": 0, "rc": 20}
+parameters = {"l": 5, "w": 6, "h": 1, "xc": 22, "yc": 69, "rc": 30/2}
+make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 1.5, "w": 2.3, "h": 2, "xc": 22, "yc": 69, "rc": 30/2}
+#make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 1, "w": 1.3, "h": 2, "xc": 15, "yc": 39, "rc": 2}
+#make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 1, "w": 0.5, "h": 2, "xc": 15, "yc": 15, "rc": 2}
+#make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 1, "w": 1.1, "h": 1, "xc": 15, "yc": 33, "rc": 2}
 #make_model(clamp_screwbarI_4, profile, parameters)
 
 #make_model(spec_clamp_screwbarI_4, profile, parameters)
@@ -110,8 +118,8 @@ for w in [2, 3, 5]:
 ## -------- Standard Screws 4 start --------
 
 
-parameters = {"l": 30, "nhead": 0, "rh4": 30/2, "rtifase": 1.0, "rhofase": 1.0}
-make_model(nut_knurl_4, profile, parameters)
+#parameters = {"l": 30, "nhead": 0, "rh4": 30/2, "rtifase": 1.0, "rhofase": 1.0}
+#make_model(nut_knurl_4, profile, parameters)
 
 #for l in [35, 60, 65, 90, 95]:
 #    print(f"Screw length: {l} mm")
@@ -181,13 +189,13 @@ make_model(nut_knurl_4, profile, parameters)
 #        make_model(thin_screwbarA_4, profile, parameters)
 #
 # -------- Thin L Screwbar 4 start --------
-for w in [2, 3, 5]:
-    for l in [2, 3, 5]:
-        if w <= l:
-            parameters = {"l": l, "w": w, "h": 1}
-            make_model(thin_screwbarL_4_in, profile, parameters)
-            make_model(thin_screwbarL_4_out, profile, parameters)
-
+#for w in [2, 3, 5]:
+#    for l in [2, 3, 5]:
+#        if w <= l:
+#            parameters = {"l": l, "w": w, "h": 1}
+#            make_model(thin_screwbarL_4_in, profile, parameters)
+#            make_model(thin_screwbarL_4_out, profile, parameters)
+#
 # -------- Other Thin Screwbar 4 start --------
 #for h in [2, 3, 5]:
 #    for l in [2, 3, 5]:
@@ -218,9 +226,9 @@ for w in [2, 3, 5]:
 #
 ## ------- Thin Gears 4 start ---------
 #
-for z in [7, 9, 11, 25, 37, 55, 73]:
-    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
-    make_model(thin_screwgear_4, profile, parameters)
+#for z in [7, 9, 11, 25, 37, 55, 73]:
+#    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
+#    make_model(thin_screwgear_4, profile, parameters)
 #
 #
 ## ------- special parts for reed sensor ------
