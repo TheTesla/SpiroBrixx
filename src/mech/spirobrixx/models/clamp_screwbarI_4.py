@@ -31,7 +31,6 @@ def convert_params(params):
 @njit
 def model_function(p):
     x, y, z, par = p
-    color = 1
     rt4i, pt4, d, rbofase, rtifase, l, w, h, dtp4, rc, xc, yc = par
 
     rt = rt4i + 2 * dtp4
@@ -54,19 +53,14 @@ def model_function(p):
     tysl = rtifase
     tysu = rtifase
     if (xd + d/10*2 - xc)**2 + (yd - yc)**2 < (rco+rt)**2:
-        color += 1
         txsu = -xr
     if (xd - d/10*2 - xc)**2 + (yd - yc)**2 < (rco+rt)**2:
-        color += 2
         txsl = xr
     if (xd - xc)**2 + (yd + d/10*2 - yc)**2 < (rco+rt)**2:
-        color += 4
         tysu = -yr
     if (xd - xc)**2 + (yd - d/10*2 - yc)**2 < (rco+rt)**2:
-        color += 8
         tysl = yr
     if (xd - xc)**2 + (yd - yc)**2 < (rco+rt)**2:
-        color += 16
         tz = 1000
     if yd + rt > w*d:
         tz = 1000
@@ -84,7 +78,7 @@ def model_function(p):
     if cmb.fz_and_chamfer(rtifase, a, -b, -txc, -tyc, -tzc) > 0:
         return False
 
-    return color
+    return True
 
 
 

@@ -22,7 +22,7 @@ from models import \
         thin_screwbarAA_4_in, thin_screwbarLA_4_in,\
         thin_screwbarUU_4_in, thin_screwbarUU_4_out, screw_flat_4,\
         thin_screwbarU_4_in, thin_screwbarU_4_out,\
-        thin_screwgear_4, screw_special_wsc_1, nut_knurl_special_wsc_1,\
+        thin_screwgear_4, spirogear, screw_special_wsc_1, nut_knurl_special_wsc_1,\
         nut_knurl_special_wsc_4
 from profiles import defaultnew
 
@@ -39,7 +39,7 @@ profile["target_dir"] = output_dir / profile["target_dir"]
 
 print(f"Output Path: {profile['target_dir']}")
 
-profile["resolution"] = 1 #0.3
+profile["resolution"] = 0.3
 
 
 
@@ -102,11 +102,16 @@ profile["resolution"] = 1 #0.3
 #for rc in range(30):
 #    parameters = {"l": 1, "w": 1, "h": 2, "xc": 10, "yc": 0, "rc": rc}
 #    make_model(clamp_screwbarI_4, profile, parameters)
-parameters = {"l": 5, "w": 6, "h": 1, "xc": 22, "yc": 69, "rc": 30/2}
-make_model(clamp_screwbarI_4, profile, parameters)
-#parameters = {"l": 1.5, "w": 2.3, "h": 2, "xc": 22, "yc": 69, "rc": 30/2}
+#parameters = {"l": 5, "w": 6, "h": 1, "xc": 22, "yc": 69, "rc": 30/2}
 #make_model(clamp_screwbarI_4, profile, parameters)
-#parameters = {"l": 1, "w": 1.3, "h": 2, "xc": 15, "yc": 39, "rc": 2}
+#parameters = {"l": 1.5, "w": 2.3, "h": 1, "xc": 22, "yc": 69, "rc": 30/2}
+#make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 3, "w": 1, "h": 1, "xc": 16, "yc": -6, "rc": 23/2}
+#make_model(clamp_screwbarI_4, profile, parameters)
+#parameters = {"l": 3, "w": 1, "h": 1, "xc": 16, "yc": 0, "rc": 23/2}
+#make_model(clamp_screwbarI_4, profile, parameters)
+
+#parameters = {"l": 3, "w": 4/5, "h": 1, "xc": 20, "yc": 0, "rc": 23/2}
 #make_model(clamp_screwbarI_4, profile, parameters)
 #parameters = {"l": 1, "w": 0.5, "h": 2, "xc": 15, "yc": 15, "rc": 2}
 #make_model(clamp_screwbarI_4, profile, parameters)
@@ -226,6 +231,10 @@ make_model(clamp_screwbarI_4, profile, parameters)
 #
 ## ------- Thin Gears 4 start ---------
 #
+#for z in [7, 9, 11, 25, 37, 55, 73]:
+for z in [15, 25]:
+    parameters = {"z": z, "m": 3.0, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
+    make_model(spirogear, profile, parameters)
 #for z in [7, 9, 11, 25, 37, 55, 73]:
 #    parameters = {"z": z, "m": 5, "alpha": 20/180*np.pi, "rbofase": 1, "resolution": 0.3}
 #    make_model(thin_screwgear_4, profile, parameters)

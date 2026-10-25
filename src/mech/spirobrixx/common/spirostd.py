@@ -46,8 +46,7 @@ def output_filename(model_name, profile, params = {}):
     prms = params2str(params)
     profile_name = profile["name"] if "name" in profile \
                     else str(profile["__name__"]).split(".")[-1]
-    #return f'{tdir}/{model_name}__{profile_name}{prms}__res_{res*1000:04.0f}u.stl'
-    return f'{tdir}/{model_name}__{profile_name}{prms}__res_{res*1000:04.0f}u.obj'
+    return f'{tdir}/{model_name}__{profile_name}{prms}__res_{res*1000:04.0f}u.stl'
 
 def make_model(model, profile, parameters):
     params = profile | parameters
