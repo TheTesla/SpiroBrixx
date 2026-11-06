@@ -721,16 +721,15 @@ files = [
 
 [[package]]
 name = "xyzcadrs"
-version = "0.3.3"
+version = "0.3.8"
 description = "Functional/implicit CAD in Rust: render f(x,y,z) material fields to watertight STL and colored OBJ. Python bindings with numba njit field support."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "xyzcadrs-0.3.3-cp39-abi3-manylinux_2_34_x86_64.whl", hash = "sha256:02c6800f02f0b7a44ec62ec6b7a1e11ddb524ee926b207fc0ad9aea297cc35f0"},
-    {file = "xyzcadrs-0.3.3.tar.gz", hash = "sha256:3b069c23d01014ef591d32fe1d0fc03b3d8cad9b04a31a2bd6fcaffba494e6b0"},
+    {file = "xyzcadrs-0.3.8-cp39-abi3-manylinux_2_34_x86_64.whl", hash = "sha256:99794055216b5c9523ed032ce64de271c102030a2b200531ad74608fdb466ec1"},
 ]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0433c09f912b16ff400083ed84ca0cfe42fe6f27d43d4e81e3c6a0eef1e2f152"
+content-hash = "7986611af4962b3e90a0d3706e6fe4d56e186203720ce5d59085f8d7a631af61"
