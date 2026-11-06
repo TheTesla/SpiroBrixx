@@ -10,7 +10,7 @@ license = "CERN-OHL-S-2.0"
 python = "^3.11"
 fuzzyometry = ">=0.0.11"
 #xyzcad = ">=0.7.0"
-xyzcadrs = ">=0.3.3"
+xyzcadrs = ">=0.3.8"
 numba = ">=0.58.0"
 
 [tool.poetry.group.dev.dependencies]
